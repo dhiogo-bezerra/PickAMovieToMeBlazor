@@ -1,5 +1,6 @@
 ﻿@inject ApiMovie apiMovie
 
+
 <div>
 	<div class="rv-hd">
 		<div>
@@ -8,16 +9,16 @@
 		</div>
 	</div>
 	<div class="title-hd-sm">
-		<h4>Photos @if (@filteredImages is not null)
+		<h4>Photos @if (_filteredImages is not null)
 			{
-				<span> - @filteredImages.Count()</span>
+				<span> - @_filteredImages.Count()</span>
 			}
 		</h4>
 	</div>
 	<div class="mvsingle-item media-item">
-			@if(filteredImages is not null)
+			@if(_filteredImages is not null)
 			{ 
-				@foreach (var row in filteredImages.ToArray().Split(2))
+				@foreach (var row in _filteredImages.ToArray().Split(2))
 					{
 						 <div class="row">
 							@foreach (var backdrop in row)
@@ -44,35 +45,41 @@
 @code {
 
 	[Parameter]
-	public string movieId { get; set; }
+	public List<ImageData>? filteredImages  { get; set; }
 
+	private List<ImageData>? _filteredImages;
 	private APIConfiguration apiConfiguration;
-	private List<ImageData> filteredImages;
+
 
 	protected async override Task OnInitializedAsync()
 	{
-	
+
 	}
 
 	protected override async Task OnAfterRenderAsync(bool firstRender)
 	{
 		if (firstRender)
 		{
-			if(!string.IsNullOrEmpty(movieId))
+			if(filteredImages is not null)
 			{
-				await LoadGallery(Int32.Parse(movieId));
+				apiConfiguration = await apiMovie.GetConfiguration();
+				_filteredImages = filteredImages;
 			}
 
 		}
 	}
 
-	public async Task LoadGallery(int movieIdTmdb)
+	public async Task LoadGallery(List<ImageData> filteredImages)
 	{
-		apiConfiguration = await apiMovie.GetConfiguration();
-		//Images
-		var imageGallery = await apiMovie.GetImageGallery(movieIdTmdb);
+		if(filteredImages is not null)
+		{
+			_filteredImages = filteredImages.DistinctBy(f => f.FilePath).OrderByDescending(f => f.VoteAverage).Take(8).ToList();
+		}
+		else
+		{
+			_filteredImages = null;
+		}
 
-		filteredImages = imageGallery.DistinctBy(f => f.FilePath).OrderByDescending(f => f.VoteAverage).Take(8).ToList();
 		StateHasChanged();
 	}
 }

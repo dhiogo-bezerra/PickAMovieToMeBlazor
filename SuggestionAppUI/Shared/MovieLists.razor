@@ -1,9 +1,10 @@
 ﻿@inject IMovieDbData movieData;
 @inject IMovieListData movieListData;
 
-@if (filteredLists is not null)
-{
-    <div class="row">
+<div class="row">
+    @if (filteredLists is not null)
+    {
+       
         @foreach (var list in filteredLists)
         {
             <div class="col-md-9 col-sm-12 col-xs-12">
@@ -18,15 +19,20 @@
         }
 
 
-    </div>
-}
+
+    }
+    else
+    {
+        <p>The movie is not in any list of the best movies on the site</p>
+    }
+</div>
 
 
 @code {
 
     [Parameter]
     public string? imdbId { get; set; }
-    private List<MovieListModel> filteredLists;
+    private List<MovieListModel>? filteredLists;
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
@@ -44,11 +50,21 @@
     public async Task LoadListWithMovie(string imdbId)
     {
         var movieDb = await movieData.GetMovieByImdbId(imdbId);
-        var listsOfMovie = movieDb.MemberOf;
-        var allLists = await movieListData.GetAllLists();
-        filteredLists = allLists.Where(f => listsOfMovie.Any(y => y.Id == f.Id)).ToList();
 
-        StateHasChanged();
+        if (movieDb is not null)
+        {
+            var listsOfMovie = movieDb.MemberOf;
+            var allLists = await movieListData.GetAllLists();
+            filteredLists = allLists.Where(f => listsOfMovie.Any(y => y.Id == f.Id)).ToList();
+
+            StateHasChanged();
+        }
+        else
+        {
+            filteredLists = null;
+            StateHasChanged();
+        }
+
     }
 
 }

@@ -37,6 +37,7 @@ namespace SuggestionAppUI
             builder.Services.AddSingleton<IMovieListData, MongoMovieListData>();
             builder.Services.AddSingleton<IMovieDbData, MongoMovieDb>();
             builder.Services.AddSingleton<ApiMovie>();
+
             builder.Services.AddSweetAlert2();
         }
     }

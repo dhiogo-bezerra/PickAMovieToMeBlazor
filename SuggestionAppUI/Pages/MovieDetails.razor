@@ -152,9 +152,9 @@
                                                 </div>
                                                 <!-- movie cast -->
                                                 <div class="mvcast-item">
-                                                    @if (credits is not null)
+                                                    @if (movie is not null && movie.Credits is not null)
                                                     {
-                                                        @foreach (Cast cast in credits.Cast.Take(10))
+                                                        @foreach (Cast cast in movie.Credits.Cast.Take(10))
                                                         {
                                                             <div class="cast-it">
                                                                 <div class="cast-left">
@@ -240,21 +240,21 @@
                                         }
                                     </div>
                                     <div id="cast" class="tab" style="@tabStatus.Where(f => f.Key.Equals("cast")).FirstOrDefault().Value">
-                                        @if (!string.IsNullOrEmpty(movieId))
+                                        @if (movie is not null && movie.Credits is not null)
                                         {
-                                            <CastCrew @ref="castCrewComponent" movieId=@movieId></CastCrew>
+                                            <CastCrew @ref="castCrewComponent" credits=movie?.Credits></CastCrew>
                                         }
                                     </div>
                                     <div id="media" class="tab" style="@tabStatus.Where(f => f.Key.Equals("media")).FirstOrDefault().Value">
-                                        @if (!string.IsNullOrEmpty(movieId))
+                                        @if (movie is not null && movie.Images.Backdrops is not null)
                                         {
-                                            <MovieGallery @ref="movieGalleryComponent" movieId=@movieId></MovieGallery>
+                                            <MovieGallery @ref="movieGalleryComponent" filteredImages=movie.Images.Backdrops></MovieGallery>
                                         }
                                     </div>
                                     <div id="moviesrelated" class="tab" style="@tabStatus.Where(f => f.Key.Equals("related")).FirstOrDefault().Value">
-                                        @if (!string.IsNullOrEmpty(movieId))
+                                        @if (movie is not null && movie.Recommendations is not null)
                                         {
-                                            <RelatedMovies @ref=relatedMoviesComponent movieId=@movieId OnClick="GetMovie" ></RelatedMovies>
+                                            <RelatedMovies @ref=relatedMoviesComponent recomendations=movie.Recommendations.Results OnClick="GetMovie" ></RelatedMovies>
                                         }
                                     </div>
                                 </div>

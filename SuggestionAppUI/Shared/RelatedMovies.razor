@@ -4,9 +4,9 @@
 
 <div class="row">
     <h3>Related Movies:</h3>
-    @if (recomendations is not null)
+    @if (_recomendations is not null)
     {
-        @foreach (var movie in recomendations)
+        @foreach (var movie in _recomendations)
         {
             <div class="movie-item-style-2 alink" @onclick="@(() => OnClick.InvokeAsync(@movie.Id))" >
                 <img src="@(apiConfiguration.Images.SecureBaseUrl + "w500" + movie.PosterPath)" alt="">
@@ -27,20 +27,22 @@
 @code {
 
     [Parameter]
-    public string? movieId { get; set; }
+    public List<SearchMovie>?  recomendations { get; set; }
 
     private APIConfiguration apiConfiguration;
-    private List<SearchMovie> recomendations;
+    private List<SearchMovie>? _recomendations;
 
-   [Parameter] public EventCallback<int> OnClick { get; set; }
+    [Parameter] public EventCallback<int> OnClick { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            if (!string.IsNullOrEmpty(movieId))
+            if (recomendations is not null)
             {
-                await LoadRelatedMovies(Convert.ToInt32(movieId));
+
+                apiConfiguration = await apiMovie.GetConfiguration();
+                _recomendations = recomendations.Take(10).ToList();
             }
 
         }
@@ -48,12 +50,14 @@
     }
 
 
-    public async Task LoadRelatedMovies(int movieIdTmdb)
+    public async Task LoadRelatedMovies(List<SearchMovie>? recomendations)
     {
-        apiConfiguration = await apiMovie.GetConfiguration();
-        var related = await apiMovie.GetRelatedMovies(movieIdTmdb);
-        recomendations = related.Results.Take(5).ToList();
-        StateHasChanged();
+        if(recomendations is not null)
+        {
+            _recomendations = recomendations.Take(10).ToList();
+            StateHasChanged();
+        }
+   
     }
 
 

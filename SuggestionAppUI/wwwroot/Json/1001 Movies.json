@@ -1364,28 +1364,6 @@
    "Directors": "Howard Hawks"
  },
  {
-   "Position": 125,
-   "Const": "tt0030522",
-   "Title": "Olympia 1. Teil - Fest der Völker",
-   "ImDbRating": 7.8,
-   "RuntimeMins": 121,
-   "Year": 1938,
-   "Genres": "Documentary, Sport",
-   "ReleaseDate": "1938-04-20",
-   "Directors": "Leni Riefenstahl"
- },
- {
-   "Position": 126,
-   "Const": "tt0030523",
-   "Title": "Olympia 2. Teil - Fest der Schönheit",
-   "ImDbRating": 7.7,
-   "RuntimeMins": 96,
-   "Year": 1938,
-   "Genres": "Documentary, Sport",
-   "ReleaseDate": "1938-04-20",
-   "Directors": "Leni Riefenstahl"
- },
- {
    "Position": 127,
    "Const": "tt0030341",
    "Title": "The Lady Vanishes",
@@ -4959,17 +4937,6 @@
    "Genres": "Drama, War",
    "ReleaseDate": "1966-04-13",
    "Directors": "Peter Watkins"
- },
- {
-   "Position": 452,
-   "Const": "tt0059817",
-   "Title": "Tôkyô orinpikku",
-   "ImDbRating": 7.8,
-   "RuntimeMins": 170,
-   "Year": 1965,
-   "Genres": "Documentary, Sport",
-   "ReleaseDate": "1965-03-20",
-   "Directors": "Kon Ichikawa"
  },
  {
    "Position": 453,
@@ -12087,17 +12054,6 @@
    "Genres": "Drama, Mystery, Romance, War",
    "ReleaseDate": "2007-08-28",
    "Directors": "Joe Wright"
- },
- {
-   "Position": 1100,
-   "Const": "tt0479547",
-   "Title": "Surfwise",
-   "ImDbRating": 7.2,
-   "RuntimeMins": 93,
-   "Year": 2007,
-   "Genres": "Documentary, Sport",
-   "ReleaseDate": "2007-09-11",
-   "Directors": "Doug Pray"
  },
  {
    "Position": 1101,

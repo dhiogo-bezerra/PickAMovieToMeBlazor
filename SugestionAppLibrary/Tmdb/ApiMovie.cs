@@ -14,25 +14,31 @@ using TMDbLib.Objects.Movies;
 using TMDbLib.Objects.People;
 using TMDbLib.Objects.Search;
 using TMDbLib.Objects.Reviews;
-
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Configuration;
 namespace SugestionAppLibrary.Tmdb;
 
 public class ApiMovie
 {
     private readonly IMovieDbData _movies;
+    private readonly IMemoryCache _cacheConfiguration;
+    private readonly TMDbClient _client;
+    private const string cacheName = "MovieTMDB";
+    private IConfiguration _configuration;
 
-    public ApiMovie(IMovieDbData movieData)
+    public ApiMovie(IMovieDbData movieData, IMemoryCache cache, IConfiguration configuration)
     {
         _movies = movieData;
+        _cacheConfiguration = cache;
+        _configuration = configuration;
+        _client = new TMDbClient(_configuration.GetValue<string>("TMDBApiKey:Value"));
     }
     public async Task<int> getTmdbIdByImdbId(string imdbId)
     {
 
         //Get the TMDB Id using the ImdbId in the database. After getting the id, save on database to avoid new api call
 
-        TMDbClient client = new TMDbClient("6ef02e34ad385ea52b42eaa59bbd3638");
-        //Movie movie = client.GetMovieAsync(47964).Result;
-        var movieTmdb = client.FindAsync(TMDbLib.Objects.Find.FindExternalSource.Imdb, imdbId).Result;
+        var movieTmdb = _client.FindAsync(TMDbLib.Objects.Find.FindExternalSource.Imdb, imdbId).Result;
         var moviedb = await _movies.GetMovieByImdbId(imdbId);
 
         if (moviedb is not null && movieTmdb is not null && movieTmdb.MovieResults.FirstOrDefault().Id > 0)
@@ -49,102 +55,21 @@ public class ApiMovie
     public async Task<Movie> GetMovie(int movieId)
     {
 
-        TMDbClient client = new TMDbClient("6ef02e34ad385ea52b42eaa59bbd3638");
-        MovieMethods movieMethods = MovieMethods.Keywords;
-        return await client.GetMovieAsync(movieId, movieMethods );
+		return await _client.GetMovieAsync(movieId, MovieMethods.Keywords | MovieMethods.Credits | MovieMethods.Images | MovieMethods.Recommendations | MovieMethods.Videos | MovieMethods.WatchProviders);
 
-    }
+	}
 
     public async Task<APIConfiguration> GetConfiguration()
     {
+        var output = _cacheConfiguration.Get<APIConfiguration>("ApiConfiguration");
 
-        TMDbClient client = new TMDbClient("6ef02e34ad385ea52b42eaa59bbd3638");
-        var retorno = await client.GetAPIConfiguration();
-        return retorno;
+        if (output is null)
+        {
+            output = await _client.GetAPIConfiguration();
+
+            _cacheConfiguration.Set("ApiConfiguration", output, TimeSpan.FromDays(1));
+        }
+        return output;
     }
 
-    public string GetUrlTrailer(int movieId)
-    {
-
-        //Get the TMDB Id using the ImdbId in the database. After getting the id, save on database to avoid new api call
-
-        TMDbClient client = new TMDbClient("6ef02e34ad385ea52b42eaa59bbd3638");
-        var videosMovie = client.GetMovieVideosAsync(movieId);
-
-        if (videosMovie is null || videosMovie.Result.Results.Count == 0)
-            return "";
-
-        var firstVideo = videosMovie.Result.Results.Where(f => f.Site == "YouTube").FirstOrDefault();
-        return "https://www.youtube.com/embed/" + firstVideo.Key;
-
-    }
-
-    public async Task<Credits> GetCredit(int movieId)
-    {
-
-        TMDbClient client = new TMDbClient("6ef02e34ad385ea52b42eaa59bbd3638");
-        return await client.GetMovieCreditsAsync(movieId);
-
-    }
-
-    public async Task<Person> GetPerson(int personId)
-    {
-
-        TMDbClient client = new TMDbClient("6ef02e34ad385ea52b42eaa59bbd3638");
-        return await client.GetPersonAsync(personId);
-
-    }
-
-    public async Task<List<ImageData>> GetImageGallery(int movieId)
-    {
-
-        TMDbClient client = new TMDbClient("6ef02e34ad385ea52b42eaa59bbd3638");
-        var gallery = await client.GetMovieImagesAsync(movieId);
-        return gallery.Backdrops;
-
-    }
-
-    public async Task<SearchContainer<SearchMovie>> GetRelatedMovies(int movieId)
-    {
-
-        TMDbClient client = new TMDbClient("6ef02e34ad385ea52b42eaa59bbd3638");
-        return await client.GetMovieRecommendationsAsync(movieId);
-      
-
-    }
-
-    public async Task<SearchContainerWithId<ReviewBase>> GetReview(int movieId)
-    {
-
-        TMDbClient client = new TMDbClient("6ef02e34ad385ea52b42eaa59bbd3638");
-        return await client.GetMovieReviewsAsync(movieId);
-
-    }
-
-    //public async static Task<string> GetCreditDetail(int movieId)
-    //{
-    //	try
-    //	{
-    //		var client = new RestClient("https://api.themoviedb.org/3/movie/28/credits?api_key=6ef02e34ad385ea52b42eaa59bbd3638&language=en-USappend_to_response=images")
-    //		{
-
-    //		};
-
-    //		var request = new RestRequest("find/tt1392190", Method.Get);
-    //		//request.AddQueryParameter("api_key", "6ef02e34ad385ea52b42eaa59bbd3638");
-    //		//request.AddQueryParameter("language", "en-US");
-    //		//request.AddQueryParameter("external_source", "imdb_id");
-    //		var response = await client.GetAsync<RootMovie>(request);
-
-    //		_json = response.ToJson();
-    //		return response.ToJson();
-    //	}
-    //	catch (Exception ex)
-    //	{
-    //		return "Erro";
-    //	}
-
-
-
-    //}
 }

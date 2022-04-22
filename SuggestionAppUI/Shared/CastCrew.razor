@@ -6,9 +6,9 @@
 			<h4>Directors</h4>
 		</div>
 	
-		@if(credits is not null)
+		@if(_credits is not null)
 		{
-			 @foreach(Crew crew in credits.Crew.Where(d => d.Job == "Director").ToList())
+			 @foreach(Crew crew in _credits.Crew.Where(d => d.Job == "Director").ToList())
 			 {
 				 <div class="mvcast-item">											
 					<div class="cast-it">
@@ -36,9 +36,9 @@
 	<div class="title-hd-sm">
 		<h4>Writers</h4>
 	</div>
-	@if(credits is not null)
+	@if(_credits is not null)
 		{
-			 @foreach(Crew crew in credits.Crew.Where(d => d.Department == "Writing").ToList())
+			 @foreach(Crew crew in _credits.Crew.Where(d => d.Department == "Writing").ToList())
 			 {
 				 <div class="mvcast-item">											
 					<div class="cast-it">
@@ -64,10 +64,10 @@
 	<div class="title-hd-sm">
 		<h4>Cast</h4>
 	</div>
-	@if(credits is not null)
+	@if(_credits is not null)
 		{
 			
-			 @foreach(Cast cast in credits.Cast.Take(20).ToList())
+			 @foreach(Cast cast in _credits.Cast.Take(20).ToList())
 			 {
 				 <div class="mvcast-item">											
 					<div class="cast-it">
@@ -93,10 +93,10 @@
 	<div class="title-hd-sm">
 		<h4>Produced by</h4>
 	</div>
-		@if(credits is not null)
+		@if(_credits is not null)
 		{
 			
-			 @foreach(Crew crew in credits.Crew.Where(d => d.Department == "Production").ToList())
+			 @foreach(Crew crew in _credits.Crew.Where(d => d.Department == "Production").ToList())
 			 {
 				 <div class="mvcast-item">											
 					<div class="cast-it">
@@ -126,19 +126,20 @@
 @code {
 
 	[Parameter]
-	public string? movieId { get; set; }
+	public Credits credits { get; set; }
 
+	private Credits _credits;
 	private APIConfiguration apiConfiguration;
-	private Credits? credits;
 
 
 	protected override async Task OnAfterRenderAsync(bool firstRender)
 	{
 		if (firstRender)
 		{
-			if(!string.IsNullOrEmpty(movieId))
+			if(credits is not null)
 			{
-				await LoadCredit(Convert.ToInt32(movieId));
+				apiConfiguration = await apiMovie.GetConfiguration();
+				_credits = credits;
 			}
 
 		}
@@ -162,15 +163,13 @@
 
 	}
 
-	public async Task LoadCredit(int movieIdTmdb)
+	public async Task LoadCredit(Credits credits)
 	{
-		apiConfiguration = await apiMovie.GetConfiguration();
-		credits = await apiMovie.GetCredit(movieIdTmdb);
+		_credits = credits;
 		StateHasChanged();
 	}
 
-	  public void RefreshMe()
-    {
-        StateHasChanged();
-    }
+	
+
+
 }

@@ -20,7 +20,6 @@ public partial class MovieDetails
 
     private MovieDbModel? movieDb;
     private Movie? movie;
-    private Credits? credits;
 
     private APIConfiguration apiConfiguration;
     protected CastCrew castCrewComponent;
@@ -147,28 +146,30 @@ public partial class MovieDetails
         movieRevenue = movie.Revenue == 0 ? "-" : movie.Revenue.ToString("C");
         movieLanguage = movie.OriginalLanguage;
         //Getting movie trailer
-        movieTrailerLink = apiMovie.GetUrlTrailer(movie.Id);
+        movieTrailerLink = GetUrlTrailer(movie.Videos.Results);
+
         //Credit
-        credits = await apiMovie.GetCredit(movie.Id);
-        if (credits is not null)
+        
+        if (movie.Credits is not null)
         {
-            movieDirector = string.Join(",", credits.Crew.Where(d => d.Job == "Director").ToList().Select(x => x.Name));
-            movieWriters = string.Join(",", credits.Crew.Where(d => d.Department == "Writing").ToList().Select(x => x.Name));
-            movieStars = string.Join(",", credits.Cast.Take(8).Select(x => x.Name));
+            movieDirector = string.Join(",", movie.Credits.Crew.Where(d => d.Job == "Director").ToList().Select(x => x.Name));
+            movieWriters = string.Join(",", movie.Credits.Crew.Where(d => d.Department == "Writing").ToList().Select(x => x.Name));
+            movieStars = string.Join(",", movie.Credits.Cast.Take(8).Select(x => x.Name));
         }
         isLoading = false;
+        await jsRunTime.InvokeVoidAsync("ChangeUrl", "/Movie/" + movie.Id);
         StateHasChanged();
 
     }
 
     private async Task UpdateComponents()
     {
-        if (!_firstRender)
+        if (!_firstRender && movie is not null)
         {
             //Only request if is not the first render (user click in a new movie)
-            await castCrewComponent.LoadCredit(movie.Id);
-            await movieGalleryComponent.LoadGallery(movie.Id);
-            await relatedMoviesComponent.LoadRelatedMovies(movie.Id);
+            await castCrewComponent.LoadCredit(movie.Credits);
+            await movieGalleryComponent.LoadGallery(movie.Images.Backdrops);
+            await relatedMoviesComponent.LoadRelatedMovies(movie.Recommendations.Results);
             await movieListComponent.LoadListWithMovie(movie.ImdbId);
         }
 
@@ -210,6 +211,26 @@ public partial class MovieDetails
     private void CloseIframeYoutube()
     {
         jsRunTime.InvokeVoidAsync("CloseIframeYoutube");
+    }
+
+    public string GetUrlTrailer(List<Video> videosMovie)
+    {
+
+        if (videosMovie is null || videosMovie.Count == 0)
+        {
+            return "";
+        }
+      
+
+        Video? firstVideo = videosMovie.Where(f => f.Site == "YouTube").FirstOrDefault();
+
+        if (firstVideo is null)
+        {
+            return "";
+        }
+
+        return "https://www.youtube.com/embed/" + firstVideo.Key;
+
     }
 
 }

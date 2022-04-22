@@ -6017,23 +6017,6 @@
    "Directors": "Peter Greenaway"
  },
  {
-   "Position": 355,
-   "Const": "tt0092337",
-   "Created": "2018-05-01",
-   "Modified": "2018-05-01",
-   "Description": "",
-   "Title": "Dekalog",
-   "URL": "https://www.imdb.com/title/tt0092337/",
-   "Title Type": "tvMiniSeries",
-   "IMDbRating": 9,
-   "RuntimeMins": 572,
-   "Year": 1989,
-   "Genres": "Drama",
-   "Num Votes": 19856,
-   "Release Date": "1989-05-16",
-   "Directors": ""
- },
- {
    "Position": 356,
    "Const": "tt0101765",
    "Created": "2018-05-01",
@@ -6746,23 +6729,6 @@
    "Num Votes": 92334,
    "Release Date": "1973-10-02",
    "Directors": "Martin Scorsese"
- },
- {
-   "Position": 398,
-   "Const": "tt0070644",
-   "Created": "2018-05-01",
-   "Modified": "2018-05-01",
-   "Description": "",
-   "Title": "Scener ur ett äktenskap",
-   "URL": "https://www.imdb.com/title/tt0070644/",
-   "Title Type": "tvMiniSeries",
-   "IMDbRating": 8.4,
-   "RuntimeMins": 283,
-   "Year": 1973,
-   "Genres": "Drama",
-   "Num Votes": 14186,
-   "Release Date": "1973-04-11",
-   "Directors": ""
  },
  {
    "Position": 399,
@@ -12356,23 +12322,6 @@
    "Num Votes": 24102,
    "Release Date": "1955-04-13",
    "Directors": "Jules Dassin"
- },
- {
-   "Position": 728,
-   "Const": "tt1637727",
-   "Created": "2018-05-01",
-   "Modified": "2018-05-01",
-   "Description": "",
-   "Title": "The Killing",
-   "URL": "https://www.imdb.com/title/tt1637727/",
-   "Title Type": "tvSeries",
-   "IMDbRating": 8.2,
-   "RuntimeMins": 45,
-   "Year": 2011,
-   "Genres": "Crime, Drama, Mystery, Thriller",
-   "Num Votes": 93212,
-   "Release Date": "2011-04-03",
-   "Directors": ""
  },
  {
    "Position": 729,
