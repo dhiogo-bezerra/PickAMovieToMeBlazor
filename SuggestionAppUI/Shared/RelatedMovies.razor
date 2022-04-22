@@ -1,0 +1,62 @@
+﻿@using TMDbLib.Objects.Search
+
+@inject ApiMovie apiMovie
+
+<div class="row">
+    <h3>Related Movies:</h3>
+    @if (recomendations is not null)
+    {
+        @foreach (var movie in recomendations)
+        {
+            <div class="movie-item-style-2 alink" @onclick="@(() => OnClick.InvokeAsync(@movie.Id))" >
+                <img src="@(apiConfiguration.Images.SecureBaseUrl + "w500" + movie.PosterPath)" alt="">
+                <div class="mv-item-infor">
+                    <h6><a>@movie.Title <span>@movie.ReleaseDate?.Year.ToString()</span></a></h6>
+                    <p class="rate"><i class="ion-android-star"></i><span>@movie.VoteAverage.ToString("0.0")</span> /10</p>
+                    <p class="describe">@movie.Overview ...</p>
+                    <p class="run-time"> <span>Release: @movie.ReleaseDate?.ToString("MMMM dd, yyyy")</span></p>
+                </div>
+            </div>
+        }
+
+    }
+
+</div>
+
+
+@code {
+
+    [Parameter]
+    public string? movieId { get; set; }
+
+    private APIConfiguration apiConfiguration;
+    private List<SearchMovie> recomendations;
+
+   [Parameter] public EventCallback<int> OnClick { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            if (!string.IsNullOrEmpty(movieId))
+            {
+                await LoadRelatedMovies(Convert.ToInt32(movieId));
+            }
+
+        }
+
+    }
+
+
+    public async Task LoadRelatedMovies(int movieIdTmdb)
+    {
+        apiConfiguration = await apiMovie.GetConfiguration();
+        var related = await apiMovie.GetRelatedMovies(movieIdTmdb);
+        recomendations = related.Results.Take(5).ToList();
+        StateHasChanged();
+    }
+
+
+
+
+}

@@ -1,0 +1,9 @@
+﻿global using SugestionAppLibrary.Models;
+global using SugestionAppLibrary.DataAccess;
+global using SugestionAppLibrary.Tmdb;
+global using SuggestionAppUI.Helpers;
+global using CurrieTechnologies.Razor.SweetAlert2;
+global using TMDbLib.Objects.Configuration;
+global using TMDbLib.Objects.General;
+global using TMDbLib.Objects.Movies;
+global using SugestionAppLibrary.Helpers;

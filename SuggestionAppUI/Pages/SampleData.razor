@@ -1,0 +1,155 @@
+﻿@page "/SampleData"
+@using System.IO
+@using Newtonsoft.Json
+@inject IUserData userData
+@inject IMovieListData movieListData
+@inject IMovieDbData movieDbData;
+
+
+<h3>SampleData</h3>
+
+
+@if (listCreated)
+{
+    <h4>Movie List have been created</h4>
+}
+else
+{
+      <button class="btn btn-primary" @onclick="CreateMovieList">Create Movie List</button>
+}
+
+   <button class="btn btn-primary" @onclick="CreateMovieDatabaseFromFiles">Create Movies from file</button>
+
+@code {
+
+    private bool listCreated = false;
+
+
+    public async Task CreateMovieDatabaseFromFiles()
+    {
+        try
+        {
+            var movies = new List<MovieDbModel>();
+            var movieslist = await movieListData.GetAllLists();
+
+            string rootpath = System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "wwwroot");
+            var filePath = rootpath + @"/Json/";
+
+            string[] fileArray = Directory.GetFiles(filePath);
+
+            foreach (var file in fileArray)
+            {
+
+                using (StreamReader r = new StreamReader(file))
+                {
+                    //Getting the filename without the extension
+
+                    var fileName = Path.GetFileName(file).Replace(".json", "");
+
+                    string jsonString = r.ReadToEnd();
+                    var movieListFile = JsonConvert.DeserializeObject<List<MovieDbModel>>(jsonString);
+
+                    MovieListModel listOfFile = movieslist.FirstOrDefault(f => f.Name.Contains(fileName));
+
+                    if (listOfFile is not null)
+                    {
+                        var basicListModel = new BasicMovieListModel(listOfFile);
+
+                        foreach (MovieDbModel movie in movieListFile)
+                        {
+
+                            //Check if movie is in database. If not, add 
+                            var movieInDatabase = await movieDbData.GetMovieByImdbId(movie.Const);
+
+                            if (movieInDatabase is null)
+                            {
+
+                                //adding movie list to the movie document
+                                movie.MemberOf.Add(basicListModel);
+
+                                //Movie don`t exist in database. Create
+                                await movieDbData.CreateMovie(movie);
+                            }
+                            else
+                            {
+                                //Check if listId is already on the movie on database
+                                if (!movieInDatabase.MemberOf.Any(m => m.Id == basicListModel.Id))
+                                {
+                                    //Add movieList to movie in database
+                                    await movieDbData.AddListToMovie(movieInDatabase.Id, basicListModel);
+                                }
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        //List name not found in database
+                        var notFound = fileName;
+                    }
+
+
+
+                }
+
+            }
+        } catch (Exception ex)
+        {
+            var error = ex.Message;
+        }
+
+
+        var final = "";
+    }
+    
+    private async Task CreateMovieList()
+    {
+        var movieLists = await movieListData.GetAllLists();
+
+        if(movieLists?.Count > 0)
+        {
+            listCreated = true;
+            return;
+        }
+
+        MovieListModel list = new()
+            {
+                Name = "1001 Movies You Must See Before You Die",
+                Description = "1001 Movies You Must See Before You Die is a film reference book edited by Steven Jay Schneider with original essays on each film contributed by over 70 film critics.",
+
+            };
+
+        await movieListData.CreateList(list);
+
+        list = new()
+            {
+                Name = "AFI 100",
+                Description = "The 100 Greatest American Films Of All Time by the American Film Institute."
+            };
+  await movieListData.CreateList(list);
+        list = new()
+            {
+                Name = "Criterion Colletcion",
+                Description = "Movies distributed by Criterion Collection. The Criterion Collection, Inc. is an American home-video distribution company that focuses on licensing, restoring and distributing 'important classic and contemporary films.' Criterion serves film and media scholars, cinephiles and public and academic libraries. "
+            };
+  await movieListData.CreateList(list);
+        list = new()
+            {
+                Name = "r/TrueFilm",
+                Description = "List made by the most voted movies in the subreddit TrueFilm: : An in-depth discussion of film",
+            };
+  await movieListData.CreateList(list);
+            list = new()
+            {
+                Name = "Martin Scorsese Recommended movies",
+                Description = "A list curated by Martin Scorsese."
+            };
+
+          await movieListData.CreateList(list);
+
+        
+
+        listCreated = true;
+    }
+
+}

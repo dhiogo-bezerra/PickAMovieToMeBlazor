@@ -1,0 +1,54 @@
+﻿@inject IMovieDbData movieData;
+@inject IMovieListData movieListData;
+
+@if (filteredLists is not null)
+{
+    <div class="row">
+        @foreach (var list in filteredLists)
+        {
+            <div class="col-md-9 col-sm-12 col-xs-12">
+                <div class="blog-item-style-1 blog-item-style-3">
+                    <img src="images/lists/@(list.Id + ".jpg")" alt="">
+                    <div class="blog-it-infor">
+                        <h3><a href="#">@list.Name</a></h3>
+                        <p>@list.Description ...</p>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+    </div>
+}
+
+
+@code {
+
+    [Parameter]
+    public string? imdbId { get; set; }
+    private List<MovieListModel> filteredLists;
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            if (!string.IsNullOrEmpty(imdbId))
+            {
+                await LoadListWithMovie(imdbId);
+            }
+
+        }
+
+    }
+
+
+    public async Task LoadListWithMovie(string imdbId)
+    {
+        var movieDb = await movieData.GetMovieByImdbId(imdbId);
+        var listsOfMovie = movieDb.MemberOf;
+        var allLists = await movieListData.GetAllLists();
+        filteredLists = allLists.Where(f => listsOfMovie.Any(y => y.Id == f.Id)).ToList();
+
+        StateHasChanged();
+    }
+
+}

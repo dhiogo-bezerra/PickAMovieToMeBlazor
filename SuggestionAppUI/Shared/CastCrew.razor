@@ -1,0 +1,176 @@
+﻿
+@inject ApiMovie apiMovie
+
+	<div class="row">						            	
+   		<div class="title-hd-sm">
+			<h4>Directors</h4>
+		</div>
+	
+		@if(credits is not null)
+		{
+			 @foreach(Crew crew in credits.Crew.Where(d => d.Job == "Director").ToList())
+			 {
+				 <div class="mvcast-item">											
+					<div class="cast-it">
+							<div class="cast-left">
+								@if(crew.ProfilePath is null)
+								{
+									<h4>@GetInitials(@crew.Name)</h4>
+								}
+								else
+								{
+									<img src="@(apiConfiguration.Images.SecureBaseUrl + "w45" + crew.ProfilePath)" alt="@crew.Name">
+								}
+
+								<a href="#">@crew.Name</a>
+							</div>
+							<p>...  Director</p>
+						</div>
+				 </div>
+						
+			}
+		}
+
+	
+	<!-- //== -->
+	<div class="title-hd-sm">
+		<h4>Writers</h4>
+	</div>
+	@if(credits is not null)
+		{
+			 @foreach(Crew crew in credits.Crew.Where(d => d.Department == "Writing").ToList())
+			 {
+				 <div class="mvcast-item">											
+					<div class="cast-it">
+							<div class="cast-left">
+								@if(crew.ProfilePath is null)
+								{
+									<img src="/images/uploads/basic_user.png" alt="@crew.Name">
+								}
+								else
+								{
+									<img src="@(apiConfiguration.Images.SecureBaseUrl + "w45" + crew.ProfilePath)" alt="@crew.Name">
+								}
+
+								<a href="#">@crew.Name</a>
+							</div>
+							<p>...  @crew.Job</p>
+						</div>
+				 </div>
+						
+			}
+		}
+	<!-- //== -->
+	<div class="title-hd-sm">
+		<h4>Cast</h4>
+	</div>
+	@if(credits is not null)
+		{
+			
+			 @foreach(Cast cast in credits.Cast.Take(20).ToList())
+			 {
+				 <div class="mvcast-item">											
+					<div class="cast-it">
+							<div class="cast-left">
+								@if(cast.ProfilePath is null)
+								{
+									<h4>@GetInitials(@cast.Name)</h4>
+								}
+								else
+								{
+									<img src="@(apiConfiguration.Images.SecureBaseUrl + "w45" + cast.ProfilePath)" alt="@cast.Name">
+								}
+
+								<a href="#">@cast.Name</a>
+							</div>
+							<p>...  @cast.Character</p>
+						</div>
+				 </div>
+						
+			}
+		}
+	<!-- //== -->
+	<div class="title-hd-sm">
+		<h4>Produced by</h4>
+	</div>
+		@if(credits is not null)
+		{
+			
+			 @foreach(Crew crew in credits.Crew.Where(d => d.Department == "Production").ToList())
+			 {
+				 <div class="mvcast-item">											
+					<div class="cast-it">
+							<div class="cast-left">
+								@if(crew.ProfilePath is null)
+								{
+									<h4>@GetInitials(@crew.Name)</h4>
+								}
+								else
+								{
+									<img src="@(apiConfiguration.Images.SecureBaseUrl + "w45" + crew.ProfilePath)" alt="@crew.Name">
+								}
+
+								<a href="#">@crew.Name</a>
+							</div>
+							<p>...  @crew.Job</p>
+						</div>
+				 </div>
+						
+			}
+		}
+
+
+         </div>					            	
+
+
+@code {
+
+	[Parameter]
+	public string? movieId { get; set; }
+
+	private APIConfiguration apiConfiguration;
+	private Credits? credits;
+
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		if (firstRender)
+		{
+			if(!string.IsNullOrEmpty(movieId))
+			{
+				await LoadCredit(Convert.ToInt32(movieId));
+			}
+
+		}
+
+	}
+
+	private string GetInitials(string Name)
+	{
+
+		var arrayName = Name.Split(' ');
+
+		//If only has one name 
+		if (arrayName.Count() == 1)
+		{
+			return arrayName[0].Substring(0, 2);
+		}
+		else
+		{
+			return arrayName[0].Substring(0, 1) + arrayName[arrayName.Count() - 1].Substring(0, 1);
+		}
+
+	}
+
+	public async Task LoadCredit(int movieIdTmdb)
+	{
+		apiConfiguration = await apiMovie.GetConfiguration();
+		credits = await apiMovie.GetCredit(movieIdTmdb);
+		StateHasChanged();
+	}
+
+	  public void RefreshMe()
+    {
+        StateHasChanged();
+    }
+}

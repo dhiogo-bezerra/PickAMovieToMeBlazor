@@ -1,0 +1,78 @@
+﻿@inject ApiMovie apiMovie
+
+<div>
+	<div class="rv-hd">
+		<div>
+			<h3>Videos & Photos of</h3>
+	
+		</div>
+	</div>
+	<div class="title-hd-sm">
+		<h4>Photos @if (@filteredImages is not null)
+			{
+				<span> - @filteredImages.Count()</span>
+			}
+		</h4>
+	</div>
+	<div class="mvsingle-item media-item">
+			@if(filteredImages is not null)
+			{ 
+				@foreach (var row in filteredImages.ToArray().Split(2))
+					{
+						 <div class="row">
+							@foreach (var backdrop in row)
+							 {
+								<div class="col-md-6 col-sm-12 col-xs-12">
+									<div class="blog-item-style-2">
+										<a href="@(apiConfiguration.Images.SecureBaseUrl + "original" + backdrop.FilePath)"  target="_blank" rel="noopener noreferrer"><img src="@(apiConfiguration.Images.SecureBaseUrl + "w300" + backdrop.FilePath)" alt=""></a>
+									</div>
+								</div>	
+							 }
+						  </div>
+}
+											
+			}
+
+	
+
+	</div>
+</div>
+
+
+
+
+@code {
+
+	[Parameter]
+	public string movieId { get; set; }
+
+	private APIConfiguration apiConfiguration;
+	private List<ImageData> filteredImages;
+
+	protected async override Task OnInitializedAsync()
+	{
+	
+	}
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		if (firstRender)
+		{
+			if(!string.IsNullOrEmpty(movieId))
+			{
+				await LoadGallery(Int32.Parse(movieId));
+			}
+
+		}
+	}
+
+	public async Task LoadGallery(int movieIdTmdb)
+	{
+		apiConfiguration = await apiMovie.GetConfiguration();
+		//Images
+		var imageGallery = await apiMovie.GetImageGallery(movieIdTmdb);
+
+		filteredImages = imageGallery.DistinctBy(f => f.FilePath).OrderByDescending(f => f.VoteAverage).Take(8).ToList();
+		StateHasChanged();
+	}
+}

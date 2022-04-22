@@ -1,0 +1,271 @@
+﻿@page "/Movie/{id?}"
+
+@using TMDbLib.Objects.Configuration
+@using TMDbLib.Objects.General
+@using TMDbLib.Objects.Movies
+@inject ICategoryData categoryData
+@inject IUserData userData
+@inject IMovieDbData movieData
+@inject NavigationManager navManager
+@inject AuthenticationStateProvider authProvider
+@inject ApiMovie apiMovie
+@inject IJSRuntime jsRunTime
+@inject IMovieListData movieListData;
+
+
+@if(isLoading)
+{
+    <div id="preloader">
+    <div id="status">
+        <span></span>
+        <span></span>
+    </div>
+</div>
+}
+
+
+
+<PageTitle>  Movies</PageTitle>
+<div class="buster-light">
+
+    <!-- The modal -->
+
+    <div class="modal fade" id="movieTrailer" tabindex="-1" role="dialog" aria-labelledby="modalLabelLarge" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" @onclick="CloseIframeYoutube">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="bd-example">
+                        <div class="embed-responsive embed-responsive-16by9">
+                            @if (!string.IsNullOrEmpty(@movieTrailerLink))
+                            {
+                                <iframe class="embed-responsive-item" src="@movieTrailerLink" allowfullscreen=""></iframe>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+
+
+    <div class="hero mv-single-hero" style="background-image: url('@movieHeader'); background-repeat:no-repeat;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- <h1> movie listing - list</h1>
+                    <ul class="breadcumb">
+                        <li class="active"><a >Home</a></li>
+                        <li> <span class="ion-ios-arrow-right"></span> movie listing</li>
+                    </ul> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-single movie-single movie_single">
+
+        <div class="container">
+            <div class="row ipad-width2">
+                <div class="col-md-4 col-sm-12 col-xs-12">
+                    <div class="movie-img sticky-sb">
+                        <img src="@moviePoster" alt="@movieName">
+                        <div class="movie-btn">
+                            @if (!string.IsNullOrEmpty(movieTrailerLink))
+                            {
+                                <div class="btn-transform transform-vertical red">
+                                    <div><a  class="item item-1 redbtn"> <i class="ion-play"></i> Watch Trailer</a></div>
+                                    <div><a id="aMovieTrailer"  class="item item-2 redbtn" data-toggle="modal" data-target="#movieTrailer"><i class="ion-play"></i></a></div>
+                                </div>
+                            }
+
+                            <div class="btn-transform transform-vertical">
+                                <div><a  class="item item-1 yellowbtn"> <i class="ion-card"></i> Buy ticket</a></div>
+                                <div><a  class="item item-2 yellowbtn"><i class="ion-card"></i></a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8 col-sm-12 col-xs-12">
+                    <div class="movie-single-ct main-content">
+                        <h1 class="bd-hd">@movieName <span>@movieYear</span></h1>
+                        <h6 class="tagline">@moviePhrase</h6>
+                        <div class="social-btn">
+                            <a class="parent-btn" @onclick="GetRandomMovie"><i class="ion-play"></i> Get a new Random Movie</a>
+                            <a class="parent-btn"><i class="ion-heart"></i> Add to Favorite</a>
+                            <div class="hover-bnt">
+                                <a  class="parent-btn"><i class="ion-android-share-alt"></i>share</a>
+                                <div class="hvr-item">
+                                    <a  class="hvr-grow"><i class="ion-social-facebook"></i></a>
+                                    <a  class="hvr-grow"><i class="ion-social-twitter"></i></a>
+                                    <a  class="hvr-grow"><i class="ion-social-googleplus"></i></a>
+                                    <a  class="hvr-grow"><i class="ion-social-youtube"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="movie-rate">
+                            <div class="rate">
+                                <i class="ion-android-star"></i>
+                                <p>
+                                    <span>@movieVoteAvarage</span> /10<br>
+                                    <span class="rv">@movieVoteCount Votes</span>
+                                </p>
+                            </div>
+                            <div class="rate-star">
+                                <p>Rate This Movie:  </p>
+                                <i class="ion-ios-star"></i>
+                                <i class="ion-ios-star"></i>
+                                <i class="ion-ios-star"></i>
+                                <i class="ion-ios-star"></i>
+                                <i class="ion-ios-star"></i>
+                                <i class="ion-ios-star"></i>
+                                <i class="ion-ios-star"></i>
+                                <i class="ion-ios-star"></i>
+                                <i class="ion-ios-star-outline"></i>
+                            </div>
+                        </div>
+                        <div class="movie-tabs">
+                            <div class="tabs">
+                                <ul class="tab-links tabs-mv">
+                                    <li class="@tabLinks.Where(f => f.Key.Equals("overview")).FirstOrDefault().Value" @onclick='(() => ChangeTabStatus("overview"))'><a >Overview</a></li>
+                                    <li class="@tabLinks.Where(f => f.Key.Equals("lists")).FirstOrDefault().Value" @onclick='(() => ChangeTabStatus("lists"))'><a > Lists</a></li>
+                                    <li class=@tabLinks.Where(f => f.Key.Equals("cast")).FirstOrDefault().Value @onclick='(() => ChangeTabStatus("cast"))'> <a >  Cast & Crew </a></li>
+                                    <li class=@tabLinks.Where(f => f.Key.Equals("media")).FirstOrDefault().Value @onclick='(() => ChangeTabStatus("media"))'><a > Media</a></li>
+                                    <li class=@tabLinks.Where(f => f.Key.Equals("related")).FirstOrDefault().Value @onclick='(() => ChangeTabStatus("related"))'><a > Related Movies</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div id="overview" class="tab active" style="@tabStatus.Where(f => f.Key.Equals("overview")).FirstOrDefault().Value">
+                                        <div class="row">
+                                            <div class="col-md-8 col-sm-12 col-xs-12">
+                                                <p id="pPlot"> @movieOverview</p>
+                                                <div class="title-hd-sm">
+                                                    <h4>cast</h4>
+                                                    <a  class="time" @onclick='(() => ChangeTabStatus("cast"))'>Full Cast & Crew  <i class="ion-ios-arrow-right"></i></a>
+                                                </div>
+                                                <!-- movie cast -->
+                                                <div class="mvcast-item">
+                                                    @if (credits is not null)
+                                                    {
+                                                        @foreach (Cast cast in credits.Cast.Take(10))
+                                                        {
+                                                            <div class="cast-it">
+                                                                <div class="cast-left">
+                                                                    @if (cast.ProfilePath is null)
+                                                                    {
+                                                                        @*<img src="/images/uploads/basic_user.png" alt="@cast.Name">*@
+                                                                        <h4>@GetInitials(@cast.Name)</h4>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <img src="@(apiConfiguration.Images.SecureBaseUrl + "w45" + cast.ProfilePath)" alt="@cast.Name">
+                                                                    }
+
+                                                                    <a >@cast.Name</a>
+                                                                </div>
+                                                                <p>...  @cast.Character</p>
+                                                            </div>
+                                                        }
+                                                    }
+
+
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-4 col-xs-12 col-sm-12">
+                                                <div class="sb-it">
+                                                    <h6>Director: </h6>
+                                                    <p><a >@movieDirector</a></p>
+                                                </div>
+                                                <div class="sb-it">
+                                                    <h6>Writer: </h6>
+                                                    <p><a >@movieWriters</a></p>
+                                                </div>
+                                                <div class="sb-it">
+                                                    <h6>Stars: </h6>
+                                                    <p><a >@movieStars</a></p>
+                                                </div>
+                                                <div class="sb-it">
+                                                    <h6>Genres:</h6>
+                                                    <p>@movieGenres</p>
+                                                </div>
+                                                <div class="sb-it">
+                                                    <h6>Release Date:</h6>
+                                                    <p>@movieReleaseDate</p>
+                                                </div>
+                                                <div class="sb-it">
+                                                    <h6>Run Time:</h6>
+                                                    <p>@movieRunTime min</p>
+                                                </div>
+                                                <div class="sb-it">
+                                                    <h6>Original Language:</h6>
+                                                    <p>@movieLanguage</p>
+                                                </div>
+                                                <div class="sb-it">
+                                                    <h6>Budget:</h6>
+                                                    <p>@movieBudget</p>
+                                                </div>
+                                                <div class="sb-it">
+                                                    <h6>Revenue:</h6>
+                                                    <p>@movieRevenue</p>
+                                                </div>
+                                                <div class="sb-it">
+                                                    <h6>Plot Keywords:</h6>
+                                                    @if(movie is not null && movie.Keywords is not null)  {
+
+                                                    <p class="tags">
+                                                        @foreach(var key in movie.Keywords.Keywords)
+                                                        {
+                                                            <span class="time"><a >@key.Name</a></span>
+                                                        }
+                                                        
+                                                    </p>
+                                                    }
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="lists" class="tab review" style="@tabStatus.Where(f => f.Key.Equals("lists")).FirstOrDefault().Value">
+                                        @if (!string.IsNullOrEmpty(@movie?.ImdbId))
+                                        {
+                                            <MovieLists @ref="movieListComponent" imdbId=@movie?.ImdbId></MovieLists>
+                                        }
+                                    </div>
+                                    <div id="cast" class="tab" style="@tabStatus.Where(f => f.Key.Equals("cast")).FirstOrDefault().Value">
+                                        @if (!string.IsNullOrEmpty(movieId))
+                                        {
+                                            <CastCrew @ref="castCrewComponent" movieId=@movieId></CastCrew>
+                                        }
+                                    </div>
+                                    <div id="media" class="tab" style="@tabStatus.Where(f => f.Key.Equals("media")).FirstOrDefault().Value">
+                                        @if (!string.IsNullOrEmpty(movieId))
+                                        {
+                                            <MovieGallery @ref="movieGalleryComponent" movieId=@movieId></MovieGallery>
+                                        }
+                                    </div>
+                                    <div id="moviesrelated" class="tab" style="@tabStatus.Where(f => f.Key.Equals("related")).FirstOrDefault().Value">
+                                        @if (!string.IsNullOrEmpty(movieId))
+                                        {
+                                            <RelatedMovies @ref=relatedMoviesComponent movieId=@movieId OnClick="GetMovie" ></RelatedMovies>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
