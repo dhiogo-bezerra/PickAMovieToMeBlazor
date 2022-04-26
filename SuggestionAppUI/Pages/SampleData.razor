@@ -1,10 +1,12 @@
 ﻿@page "/SampleData"
 @using System.IO
 @using Newtonsoft.Json
+@using System.Threading
 @inject IUserData userData
 @inject IMovieListData movieListData
 @inject IMovieDbData movieDbData;
-
+@inject IGenreData genreDbData;
+@inject ApiMovie apiMovie
 
 <h3>SampleData</h3>
 <div class="buster-light" style="padding-top: 400px;">
@@ -19,6 +21,10 @@ else
 }
 
    <button class="btn btn-primary" @onclick="CreateMovieDatabaseFromFiles">Create Movies from file</button>
+
+    <button class="btn btn-primary" @onclick="UpdateMovieDatabase">Update Movie on Database</button>
+        <button class="btn btn-primary" @onclick="CreateGenres">Update Genres on Database</button>
+
 </div>
 @code {
 
@@ -101,7 +107,7 @@ else
 
         var final = "";
     }
-    
+
     private async Task CreateMovieList()
     {
         var movieLists = await movieListData.GetAllLists();
@@ -126,30 +132,83 @@ else
                 Name = "AFI 100",
                 Description = "The 100 Greatest American Films Of All Time by the American Film Institute."
             };
-  await movieListData.CreateList(list);
+        await movieListData.CreateList(list);
         list = new()
             {
                 Name = "Criterion Colletcion",
                 Description = "Movies distributed by Criterion Collection. The Criterion Collection, Inc. is an American home-video distribution company that focuses on licensing, restoring and distributing 'important classic and contemporary films.' Criterion serves film and media scholars, cinephiles and public and academic libraries. "
             };
-  await movieListData.CreateList(list);
+        await movieListData.CreateList(list);
         list = new()
             {
                 Name = "r/TrueFilm",
                 Description = "List made by the most voted movies in the subreddit TrueFilm: : An in-depth discussion of film",
             };
-  await movieListData.CreateList(list);
-            list = new()
+        await movieListData.CreateList(list);
+        list = new()
             {
                 Name = "Martin Scorsese Recommended movies",
                 Description = "A list curated by Martin Scorsese."
             };
 
-          await movieListData.CreateList(list);
+        await movieListData.CreateList(list);
 
-        
+
 
         listCreated = true;
+    }
+
+    public async Task UpdateMovieDatabase()
+    {
+        try
+        {
+            var movies = await movieDbData.GetAllMovies();
+            movies = movies.Where(f => string.IsNullOrEmpty(f.ReleaseDate)).ToList();
+
+            foreach(var movie in movies)
+            {
+                var idTmdb = await apiMovie.getTmdbIdByImdbId(movie.Const);
+                //Sleeping so the api is not called in so short time period
+                Thread.Sleep(1000);
+
+            }
+
+
+        }
+        catch (Exception ex)
+        {
+            var error = ex.Message;
+        }
+
+    }
+
+    public async Task CreateGenres()
+    {
+        var movies = await movieDbData.GetAllMovies();
+
+        //Get Genres
+        var dinstinctGenres = movies
+        .GroupBy(p => p.Genres)
+        .Select(g => g.First())
+        .ToList();
+
+        var hashset = new HashSet<string>(); 
+        foreach (var item in dinstinctGenres)
+        {
+            foreach(var genre in item.Genres.Split(',').ToList<string>())
+            {
+                hashset.Add(genre.Trim());
+            }
+        }
+
+        string names = string.Join(",", hashset);
+
+        foreach(var genre in hashset)
+        {
+            await genreDbData.CreateGenre(new GenreModel { Name = genre });
+        }
+
+            //_movieList = _movieList.Take(23).ToList();
     }
 
 }

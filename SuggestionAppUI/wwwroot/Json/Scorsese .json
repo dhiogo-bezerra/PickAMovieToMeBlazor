@@ -13,7 +13,7 @@
     "Year": 1955,
     "Genres": "Drama, Romance",
     "Num Votes": 14643,
-    "Release Date": "1955-08-25",
+    "ReleaseDate": "1955-08-25",
     "Directors": "Douglas Sirk"
   },
   {
@@ -30,7 +30,7 @@
     "Year": 1963,
     "Genres": "Drama",
     "Num Votes": 5466,
-    "Release Date": "1963-12-15",
+    "ReleaseDate": "1963-12-15",
     "Directors": "Elia Kazan"
   },
   {
@@ -47,7 +47,7 @@
     "Year": 1951,
     "Genres": "Drama, Musical, Romance",
     "Num Votes": 33264,
-    "Release Date": "1951-08-26",
+    "ReleaseDate": "1951-08-26",
     "Directors": "Vincente Minnelli"
   },
   {
@@ -64,7 +64,7 @@
     "Year": 1979,
     "Genres": "Drama, Mystery, War",
     "Num Votes": 648148,
-    "Release Date": "1979-05-19",
+    "ReleaseDate": "1979-05-19",
     "Directors": "Francis Ford Coppola"
   },
   {
@@ -81,7 +81,7 @@
     "Year": 1943,
     "Genres": "Comedy, Crime, Thriller",
     "Num Votes": 69910,
-    "Release Date": "1943-01-31",
+    "ReleaseDate": "1943-01-31",
     "Directors": "Frank Capra"
   },
   {
@@ -98,7 +98,7 @@
     "Year": 1952,
     "Genres": "Drama, Romance",
     "Num Votes": 14722,
-    "Release Date": "1952-12-25",
+    "ReleaseDate": "1952-12-25",
     "Directors": "Vincente Minnelli"
   },
   {
@@ -115,7 +115,7 @@
     "Year": 1953,
     "Genres": "Comedy, Musical, Romance",
     "Num Votes": 11239,
-    "Release Date": "1953-07-09",
+    "ReleaseDate": "1953-07-09",
     "Directors": "Vincente Minnelli"
   },
   {
@@ -132,7 +132,7 @@
     "Year": 1989,
     "Genres": "Biography, Drama, War",
     "Num Votes": 104562,
-    "Release Date": "1989-12-20",
+    "ReleaseDate": "1989-12-20",
     "Directors": "Oliver Stone"
   },
   {
@@ -149,7 +149,7 @@
     "Year": 1962,
     "Genres": "Drama, Thriller",
     "Num Votes": 28720,
-    "Release Date": "1962-04-12",
+    "ReleaseDate": "1962-04-12",
     "Directors": "J. Lee Thompson"
   },
   {
@@ -166,7 +166,7 @@
     "Year": 1942,
     "Genres": "Fantasy, Horror, Thriller",
     "Num Votes": 22290,
-    "Release Date": "1942-12-05",
+    "ReleaseDate": "1942-12-05",
     "Directors": "Jacques Tourneur"
   },
   {
@@ -183,7 +183,7 @@
     "Year": 1949,
     "Genres": "Drama, Film-Noir, Romance",
     "Num Votes": 3705,
-    "Release Date": "1949-02-17",
+    "ReleaseDate": "1949-02-17",
     "Directors": "Max Ophüls"
   },
   {
@@ -200,7 +200,7 @@
     "Year": 1974,
     "Genres": "Drama, Mystery, Thriller",
     "Num Votes": 109303,
-    "Release Date": "1974-04-07",
+    "ReleaseDate": "1974-04-07",
     "Directors": "Francis Ford Coppola"
   },
   {
@@ -217,7 +217,7 @@
     "Year": 1954,
     "Genres": "Crime, Thriller",
     "Num Votes": 171712,
-    "Release Date": "1954-05-19",
+    "ReleaseDate": "1954-05-19",
     "Directors": "Alfred Hitchcock"
   },
   {
@@ -234,7 +234,7 @@
     "Year": 1989,
     "Genres": "Comedy, Drama",
     "Num Votes": 99703,
-    "Release Date": "1989-05-19",
+    "ReleaseDate": "1989-05-19",
     "Directors": "Spike Lee"
   },
   {
@@ -251,7 +251,7 @@
     "Year": 1946,
     "Genres": "Drama, Romance, Western",
     "Num Votes": 8636,
-    "Release Date": "1946-12-29",
+    "ReleaseDate": "1946-12-29",
     "Directors": "Otto Brower, Sidney Franklin, King Vidor, David O. Selznick, William Dieterle, Josef von Sternberg, William Cameron Menzies"
   },
   {
@@ -268,7 +268,7 @@
     "Year": 1921,
     "Genres": "Drama, Romance, War",
     "Num Votes": 3330,
-    "Release Date": "1921-03-06",
+    "ReleaseDate": "1921-03-06",
     "Directors": "Rex Ingram"
   },
   {
@@ -285,7 +285,7 @@
     "Year": 1952,
     "Genres": "Drama",
     "Num Votes": 4074,
-    "Release Date": "1952-09-12",
+    "ReleaseDate": "1952-09-12",
     "Directors": "Roberto Rossellini"
   },
   {
@@ -302,7 +302,7 @@
     "Year": 1968,
     "Genres": "Drama",
     "Num Votes": 10564,
-    "Release Date": "1968-04-05",
+    "ReleaseDate": "1968-04-05",
     "Directors": "John Cassavetes"
   },
   {
@@ -319,7 +319,7 @@
     "Year": 1964,
     "Genres": "Drama, History, War",
     "Num Votes": 9108,
-    "Release Date": "1964-03-24",
+    "ReleaseDate": "1964-03-24",
     "Directors": "Anthony Mann"
   },
   {
@@ -336,7 +336,7 @@
     "Year": 1950,
     "Genres": "Biography, Comedy, Drama, History",
     "Num Votes": 3612,
-    "Release Date": "1950-08-26",
+    "ReleaseDate": "1950-08-26",
     "Directors": "Roberto Rossellini"
   },
   {
@@ -353,7 +353,7 @@
     "Year": 1948,
     "Genres": "Crime, Drama, Film-Noir",
     "Num Votes": 6673,
-    "Release Date": "1948-12-25",
+    "ReleaseDate": "1948-12-25",
     "Directors": "Abraham Polonsky"
   },
   {
@@ -370,7 +370,7 @@
     "Year": 1957,
     "Genres": "Drama, Romance, Western",
     "Num Votes": 5205,
-    "Release Date": "1957-09-10",
+    "ReleaseDate": "1957-09-10",
     "Directors": "Samuel Fuller"
   },
   {
@@ -387,7 +387,7 @@
     "Year": 1948,
     "Genres": "Drama, War",
     "Num Votes": 12159,
-    "Release Date": "1948-07-09",
+    "ReleaseDate": "1948-07-09",
     "Directors": "Roberto Rossellini"
   },
   {
@@ -404,7 +404,7 @@
     "Year": 1946,
     "Genres": "Drama, Film-Noir, Romance, Thriller",
     "Num Votes": 31758,
-    "Release Date": "1946-03-14",
+    "ReleaseDate": "1946-03-14",
     "Directors": "Charles Vidor"
   },
   {
@@ -421,7 +421,7 @@
     "Year": 1972,
     "Genres": "Crime, Drama",
     "Num Votes": 1771149,
-    "Release Date": "1972-03-14",
+    "ReleaseDate": "1972-03-14",
     "Directors": "Francis Ford Coppola"
   },
   {
@@ -438,7 +438,7 @@
     "Year": 1950,
     "Genres": "Crime, Drama, Film-Noir, Romance, Thriller",
     "Num Votes": 13126,
-    "Release Date": "1950-01-20",
+    "ReleaseDate": "1950-01-20",
     "Directors": "Joseph H. Lewis"
   },
   {
@@ -455,7 +455,7 @@
     "Year": 1980,
     "Genres": "Comedy",
     "Num Votes": 821,
-    "Release Date": "1980-08-23",
+    "ReleaseDate": "1980-08-23",
     "Directors": "Robert Altman"
   },
   {
@@ -472,7 +472,7 @@
     "Year": 1980,
     "Genres": "Adventure, Drama, Western",
     "Num Votes": 14946,
-    "Release Date": "1980-11-18",
+    "ReleaseDate": "1980-11-18",
     "Directors": "Michael Cimino"
   },
   {
@@ -489,7 +489,7 @@
     "Year": 1953,
     "Genres": "Horror",
     "Num Votes": 17908,
-    "Release Date": "1953-04-09",
+    "ReleaseDate": "1953-04-09",
     "Directors": "André De Toth"
   },
   {
@@ -506,7 +506,7 @@
     "Year": 1941,
     "Genres": "Drama, Family",
     "Num Votes": 23789,
-    "Release Date": "1941-10-28",
+    "ReleaseDate": "1941-10-28",
     "Directors": "John Ford"
   },
   {
@@ -523,7 +523,7 @@
     "Year": 1961,
     "Genres": "Drama, Sport",
     "Num Votes": 80843,
-    "Release Date": "1961-09-24",
+    "ReleaseDate": "1961-09-24",
     "Directors": "Robert Rossen"
   },
   {
@@ -540,7 +540,7 @@
     "Year": 1947,
     "Genres": "Crime, Drama, Film-Noir",
     "Num Votes": 2848,
-    "Release Date": "1947-12-31",
+    "ReleaseDate": "1947-12-31",
     "Directors": "Byron Haskin"
   },
   {
@@ -557,7 +557,7 @@
     "Year": 1903,
     "Genres": "Short, Fantasy, Horror",
     "Num Votes": 1053,
-    "Release Date": "1903-06-13",
+    "ReleaseDate": "1903-06-13",
     "Directors": "Georges Méliès"
   },
   {
@@ -574,7 +574,7 @@
     "Year": 1934,
     "Genres": "Comedy, Romance",
     "Num Votes": 101788,
-    "Release Date": "1934-02-18",
+    "ReleaseDate": "1934-02-18",
     "Directors": "Frank Capra"
   },
   {
@@ -591,7 +591,7 @@
     "Year": 1963,
     "Genres": "Action, Adventure, Family, Fantasy",
     "Num Votes": 27424,
-    "Release Date": "1963-06-19",
+    "ReleaseDate": "1963-06-19",
     "Directors": "Don Chaffey"
   },
   {
@@ -608,7 +608,7 @@
     "Year": 1954,
     "Genres": "Drama, Romance",
     "Num Votes": 10369,
-    "Release Date": "1954-09-07",
+    "ReleaseDate": "1954-09-07",
     "Directors": "Roberto Rossellini"
   },
   {
@@ -625,7 +625,7 @@
     "Year": 1953,
     "Genres": "Drama, History",
     "Num Votes": 11431,
-    "Release Date": "1953-05-08",
+    "ReleaseDate": "1953-05-08",
     "Directors": "Joseph L. Mankiewicz"
   },
   {
@@ -642,7 +642,7 @@
     "Year": 1996,
     "Genres": "Crime, Drama, Music, Thriller",
     "Num Votes": 4871,
-    "Release Date": "1996-05-15",
+    "ReleaseDate": "1996-05-15",
     "Directors": "Robert Altman"
   },
   {
@@ -659,7 +659,7 @@
     "Year": 1955,
     "Genres": "Crime, Film-Noir, Mystery, Sci-Fi, Thriller",
     "Num Votes": 20156,
-    "Release Date": "1955-04-20",
+    "ReleaseDate": "1955-04-20",
     "Directors": "Robert Aldrich"
   },
   {
@@ -676,7 +676,7 @@
     "Year": 1971,
     "Genres": "Crime, Mystery, Thriller",
     "Num Votes": 25494,
-    "Release Date": "1971-06-23",
+    "ReleaseDate": "1971-06-23",
     "Directors": "Alan J. Pakula"
   },
   {
@@ -693,7 +693,7 @@
     "Year": 1948,
     "Genres": "Drama",
     "Num Votes": 4990,
-    "Release Date": "1948-09-02",
+    "ReleaseDate": "1948-09-02",
     "Directors": "Luchino Visconti"
   },
   {
@@ -710,7 +710,7 @@
     "Year": 1947,
     "Genres": "Crime, Drama, Film-Noir, Mystery, Thriller",
     "Num Votes": 29829,
-    "Release Date": "1947-12-24",
+    "ReleaseDate": "1947-12-24",
     "Directors": "Orson Welles"
   },
   {
@@ -727,7 +727,7 @@
     "Year": 1963,
     "Genres": "Drama, History",
     "Num Votes": 25435,
-    "Release Date": "1963-01-02",
+    "ReleaseDate": "1963-01-02",
     "Directors": "Luchino Visconti"
   },
   {
@@ -744,7 +744,7 @@
     "Year": 1948,
     "Genres": "Drama, History, War",
     "Num Votes": 7106,
-    "Release Date": "1948-09-03",
+    "ReleaseDate": "1948-09-03",
     "Directors": "Orson Welles"
   },
   {
@@ -761,7 +761,7 @@
     "Year": 1951,
     "Genres": "Biography, Drama",
     "Num Votes": 1281,
-    "Release Date": "1951-09-18",
+    "ReleaseDate": "1951-09-18",
     "Directors": "John Boulting"
   },
   {
@@ -778,7 +778,7 @@
     "Year": 1970,
     "Genres": "Comedy, Drama, War",
     "Num Votes": 72002,
-    "Release Date": "1970-01-25",
+    "ReleaseDate": "1970-01-25",
     "Directors": "Robert Altman"
   },
   {
@@ -795,7 +795,7 @@
     "Year": 1946,
     "Genres": "Drama, Fantasy, Romance, War",
     "Num Votes": 21630,
-    "Release Date": "1946-11-01",
+    "ReleaseDate": "1946-11-01",
     "Directors": "Michael Powell, Emeric Pressburger"
   },
   {
@@ -812,7 +812,7 @@
     "Year": 1971,
     "Genres": "Drama, Western",
     "Num Votes": 24600,
-    "Release Date": "1971-06-24",
+    "ReleaseDate": "1971-06-24",
     "Directors": "Robert Altman"
   },
   {
@@ -829,7 +829,7 @@
     "Year": 1975,
     "Genres": "Biography, History",
     "Num Votes": 328,
-    "Release Date": "1975-10-25",
+    "ReleaseDate": "1975-10-25",
     "Directors": "Roberto Rossellini"
   },
   {
@@ -846,7 +846,7 @@
     "Year": 1969,
     "Genres": "Drama",
     "Num Votes": 109201,
-    "Release Date": "1969-05-25",
+    "ReleaseDate": "1969-05-25",
     "Directors": "John Schlesinger"
   },
   {
@@ -863,7 +863,7 @@
     "Year": 1985,
     "Genres": "Biography, Drama",
     "Num Votes": 11136,
-    "Release Date": "1985-05-15",
+    "ReleaseDate": "1985-05-15",
     "Directors": "Paul Schrader"
   },
   {
@@ -880,7 +880,7 @@
     "Year": 1936,
     "Genres": "Comedy, Drama, Romance",
     "Num Votes": 21266,
-    "Release Date": "1936-04-08",
+    "ReleaseDate": "1936-04-08",
     "Directors": "Frank Capra"
   },
   {
@@ -897,7 +897,7 @@
     "Year": 1939,
     "Genres": "Comedy, Drama",
     "Num Votes": 113970,
-    "Release Date": "1939-10-17",
+    "ReleaseDate": "1939-10-17",
     "Directors": "Frank Capra"
   },
   {
@@ -914,7 +914,7 @@
     "Year": 1975,
     "Genres": "Comedy, Drama, Music",
     "Num Votes": 25928,
-    "Release Date": "1975-06-11",
+    "ReleaseDate": "1975-06-11",
     "Directors": "Robert Altman"
   },
   {
@@ -931,7 +931,7 @@
     "Year": 1941,
     "Genres": "Drama, Mystery",
     "Num Votes": 432847,
-    "Release Date": "1941-05-01",
+    "ReleaseDate": "1941-05-01",
     "Directors": "Orson Welles"
   },
   {
@@ -948,7 +948,7 @@
     "Year": 1950,
     "Genres": "Crime, Film-Noir, Mystery, Sport, Thriller",
     "Num Votes": 13496,
-    "Release Date": "1950-06-09",
+    "ReleaseDate": "1950-06-09",
     "Directors": "Jules Dassin"
   },
   {
@@ -965,7 +965,7 @@
     "Year": 1961,
     "Genres": "Comedy",
     "Num Votes": 20956,
-    "Release Date": "1961-12-15",
+    "ReleaseDate": "1961-12-15",
     "Directors": "Billy Wilder"
   },
   {
@@ -982,7 +982,7 @@
     "Year": 1951,
     "Genres": "Drama, Romance",
     "Num Votes": 8554,
-    "Release Date": "1951-11-27",
+    "ReleaseDate": "1951-11-27",
     "Directors": "Orson Welles"
   },
   {
@@ -999,7 +999,7 @@
     "Year": 1946,
     "Genres": "Drama, War",
     "Num Votes": 8383,
-    "Release Date": "1946-09-18",
+    "ReleaseDate": "1946-09-18",
     "Directors": "Roberto Rossellini"
   },
   {
@@ -1016,7 +1016,7 @@
     "Year": 1960,
     "Genres": "Drama, Horror, Thriller",
     "Num Votes": 34652,
-    "Release Date": "1960-04-07",
+    "ReleaseDate": "1960-04-07",
     "Directors": "Michael Powell"
   },
   {
@@ -1033,7 +1033,7 @@
     "Year": 1953,
     "Genres": "Crime, Film-Noir, Romance, Thriller",
     "Num Votes": 14493,
-    "Release Date": "1953-05-27",
+    "ReleaseDate": "1953-05-27",
     "Directors": "Samuel Fuller"
   },
   {
@@ -1050,7 +1050,7 @@
     "Year": 1992,
     "Genres": "Comedy, Crime, Drama, Thriller",
     "Num Votes": 59280,
-    "Release Date": "1992-04-03",
+    "ReleaseDate": "1992-04-03",
     "Directors": "Robert Altman"
   },
   {
@@ -1067,7 +1067,7 @@
     "Year": 1995,
     "Genres": "Documentary, Biography, History",
     "Num Votes": 4896,
-    "Release Date": "1995-05-21",
+    "ReleaseDate": "1995-05-21",
     "Directors": "Martin Scorsese, Michael Henry Wilson"
   },
   {
@@ -1084,7 +1084,7 @@
     "Year": 1933,
     "Genres": "Drama",
     "Num Votes": 666,
-    "Release Date": "1933-08-16",
+    "ReleaseDate": "1933-08-16",
     "Directors": "William K. Howard"
   },
   {
@@ -1101,7 +1101,7 @@
     "Year": 1939,
     "Genres": "Adventure, Drama, Western",
     "Num Votes": 47962,
-    "Release Date": "1939-02-10",
+    "ReleaseDate": "1939-02-10",
     "Directors": "John Ford"
   },
   {
@@ -1118,7 +1118,7 @@
     "Year": 1948,
     "Genres": "Crime, Drama, Film-Noir, Thriller",
     "Num Votes": 4657,
-    "Release Date": "1948-05-21",
+    "ReleaseDate": "1948-05-21",
     "Directors": "Anthony Mann"
   },
   {
@@ -1135,7 +1135,7 @@
     "Year": 1948,
     "Genres": "Drama, Music, Romance",
     "Num Votes": 34257,
-    "Release Date": "1948-07-22",
+    "ReleaseDate": "1948-07-22",
     "Directors": "Michael Powell, Emeric Pressburger"
   },
   {
@@ -1152,7 +1152,7 @@
     "Year": 1966,
     "Genres": "Biography, History",
     "Num Votes": 1544,
-    "Release Date": "1966-09-10",
+    "ReleaseDate": "1966-09-10",
     "Directors": "Roberto Rossellini"
   },
   {
@@ -1169,7 +1169,7 @@
     "Year": 1939,
     "Genres": "Crime, Drama, Film-Noir, Thriller",
     "Num Votes": 13836,
-    "Release Date": "1939-10-28",
+    "ReleaseDate": "1939-10-28",
     "Directors": "Raoul Walsh"
   },
   {
@@ -1186,7 +1186,7 @@
     "Year": 1960,
     "Genres": "Crime, Drama, Sport",
     "Num Votes": 18670,
-    "Release Date": "1960-09-06",
+    "ReleaseDate": "1960-09-06",
     "Directors": "Luchino Visconti"
   }
 ]

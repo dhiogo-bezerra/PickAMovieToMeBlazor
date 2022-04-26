@@ -16,6 +16,7 @@ namespace SugestionAppLibrary.DataAccess
         string UserCollectionName { get; }
         IMongoCollection<MovieListModel> MovieListCollection { get; }
         IMongoCollection<MovieDbModel> MovieDbCollection { get; }
+        IMongoCollection<GenreModel> GenreCollection { get; }
         string MovieDbCollectionName { get; }
     }
 }

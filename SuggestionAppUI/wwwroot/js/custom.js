@@ -1,10 +1,10 @@
 //preloading for page
 $(window).on('load', function() { // makes sure the whole site is loaded 
 	var status = $('#status');
-	var preloader = $('#preloader');
+
 	var body = $('body');
 	status.fadeOut(); // will first fade out the loading animation 
-	preloader.delay(0).fadeOut('fast'); // will fade out the white DIV that covers the website. 
+	
 	body.delay(0).css({'overflow':'visible'});
 	var vidDefer = document.getElementsByTagName('iframe');
 	for (var i=0; i<vidDefer.length; i++) {
@@ -13,6 +13,7 @@ $(window).on('load', function() { // makes sure the whole site is loaded
 		} 
 	}
 })
+
 $(function(){
 	'use strict';
 	// js for dropdown menu
@@ -104,19 +105,6 @@ $(function(){
 	var deadline = new Date(Date.parse(new Date()) + 25 * 24 * 60 * 60 * 1000);
 	initializeClock('clockdiv', deadline);
 
-	//js for twitter
-	var tweets = jQuery(".tweet");
-	jQuery(tweets).each( function( t, tweet ) { 
-    var id = jQuery(this).attr('id');
-    twttr.widgets.createTweet(
-      id, tweet, 
-      {
-        conversation : 'none',    // or all
-        cards        : 'hidden',  // or visible 
-        linkColor    : 'default', // default is blue
-        theme        : 'light'    // or dark
-      });
-    }); 
 
 	//slider for movie and tv show home 2
 	multiItem2.slick({
@@ -489,13 +477,17 @@ $(function(){
 		e.preventDefault();
 		var overlay = $(".overlay");
 		overlay.removeClass("openform");
-	});	
-    //js for multi selected
-    var multiselect = $(".ui.fluid.dropdown");
-    multiselect.dropdown({
-		allowLabels:true
-	})
-	multiselect.dropdown({'set selected': 'Role1,Role2'});
+		  });
+
+
+ //   //js for multi selected
+ //   var multiselect = $(".ui.fluid.dropdown");
+ //   multiselect.dropdown({
+	//	allowLabels: true,
+	//	clearable: true
+	//})
+	//multiselect.dropdown({'set selected': 'Role1,Role2'});
+
 	//== scroll function for single page
 	$(window).scroll(function(event) {
 		/* Act on the event */
@@ -508,6 +500,7 @@ $(function(){
 			header.removeClass('sticky');
 		}
 	});		
+
 	//back to top js
 	var backtotop = $('#back-to-top');
     backtotop.on('click', function (e) {
@@ -527,7 +520,7 @@ $(function(){
     });
 
 	//sticky sidebar
-	if(windowWidth > 1200){
+	if(windowWidth > 1000){
 		var stickySidebar = $('.sticky-sb');
 		var mainCt = $('.main-content');
 		if (stickySidebar.length > 0) {	

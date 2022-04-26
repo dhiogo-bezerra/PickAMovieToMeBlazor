@@ -80,7 +80,7 @@ public partial class MovieDetails
                 await GetMovie(movieIdFromUrl);
             }
 
-
+            await jsRunTime.InvokeAsync<IJSObjectReference>("import", "/js/custom.js");
 
         }
     }
@@ -157,7 +157,7 @@ public partial class MovieDetails
             movieStars = string.Join(",", movie.Credits.Cast.Take(8).Select(x => x.Name));
         }
         isLoading = false;
-        await jsRunTime.InvokeVoidAsync("ChangeUrl", "/Movie/" + movie.Id);
+        //await jsRunTime.InvokeVoidAsync("ChangeUrl", "/Movie/" + movie.Id);
         StateHasChanged();
 
     }

@@ -15,6 +15,7 @@ public class DbConnection : IDbConnection
     public string SuggestionCollectionName { get; private set; } = "suggestions";
     public string MovieListCollectionName { get; private set; } = "movielists";
     public string MovieDbCollectionName { get; private set; } = "moviedb";
+    public string GenreModelCollectionName { get; private set; } = "genres";
 
 
     public MongoClient Client { get; private set; }
@@ -24,6 +25,7 @@ public class DbConnection : IDbConnection
     public IMongoCollection<SuggestionModel> SugestionCollection { get; private set; }
     public IMongoCollection<MovieListModel> MovieListCollection { get; private set; }
     public IMongoCollection<MovieDbModel> MovieDbCollection { get; private set; }
+    public IMongoCollection<GenreModel> GenreCollection { get; private set; }
 
     public DbConnection(IConfiguration config)
     {
@@ -38,5 +40,6 @@ public class DbConnection : IDbConnection
         SugestionCollection = _db.GetCollection<SuggestionModel>(SuggestionCollectionName);
         MovieListCollection = _db.GetCollection<MovieListModel>(MovieListCollectionName);
         MovieDbCollection = _db.GetCollection<MovieDbModel>(MovieDbCollectionName);
+        GenreCollection = _db.GetCollection<GenreModel>(GenreModelCollectionName);
     }
 }

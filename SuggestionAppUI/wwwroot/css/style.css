@@ -31,6 +31,9 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+
 @media print {
   *,
   *:before,
@@ -4012,7 +4015,7 @@ select {
   -webkit-border-radius: 0 !important;
 }
 p {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 14px;
   color: #abb7c4;
   font-weight: 300;
@@ -4547,7 +4550,7 @@ ul {
 }
 .topbar-filter label,
 .topbar-filter select {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 14px;
   color: #abb7c4;
   font-weight: 300;
@@ -4567,12 +4570,13 @@ ul {
   font-weight: 400;
 }
 @media (max-width: 767px) {
-  .topbar-filter select {
-    border: 1px solid #405266;
-  }
+    .topbar-filter select {
+        border: 1px solid #405266;
+        background-color: #020d18;
+    }
 }
 .topbar-filter option {
-  background-color: #020d18;
+  /*background-color: #020d18;*/
 }
 .topbar-filter .list,
 .topbar-filter .grid {
@@ -4617,7 +4621,7 @@ ul {
 }
 .topbar-filter .pagination2 span,
 .topbar-filter .pagination2 a {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 14px;
   color: #abb7c4;
   font-weight: 300;
@@ -4630,7 +4634,7 @@ ul {
 }
 .topbar-filter .pagination2 a.active,
 .topbar-filter .pagination2 a:hover {
-  color: #dcf836;
+  color: #dd003f;
 }
 .topbar-filter.fw p {
   padding-right: 600px;
@@ -5094,7 +5098,7 @@ ul {
   color: #dcf836;
 }
 .sidebar .sb-search input {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 12px;
   color: #abb7c4;
   font-weight: 300;
@@ -5111,7 +5115,7 @@ ul {
   margin-bottom: 15px;
 }
 .sidebar .sb-cate ul li a {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 14px;
   color: #abb7c4;
   font-weight: 300;
@@ -5166,7 +5170,7 @@ ul {
   background-color: #152a3e;
 }
 .sidebar .sb-tags .tag-items a {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 14px;
   color: #abb7c4;
   font-weight: 300;
@@ -5194,7 +5198,7 @@ ul {
   margin-bottom: 60px;
 }
 .time {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 12px;
   color: #abb7c4;
   font-weight: 300;
@@ -5318,7 +5322,7 @@ ul {
   margin-right: 15px;
 }
 .pagination li a {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 14px;
   color: #abb7c4;
   font-weight: 300;
@@ -5462,7 +5466,7 @@ ul {
   justify-content: flex-start;
 }
 .blog-detail-ct .share-tag .right-it a {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 14px;
   color: #abb7c4;
   font-weight: 300;
@@ -5532,7 +5536,7 @@ ul {
 }
 .blog-detail-ct .comment-form form input,
 .blog-detail-ct .comment-form form textarea {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 12px;
   color: #abb7c4;
   font-weight: 300;
@@ -5641,7 +5645,7 @@ ul {
 .hero ul.breadcumb li,
 .hero ul.breadcumb a {
   display: inline-block;
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 14px;
   color: #abb7c4;
   font-weight: 300;
@@ -5671,6 +5675,10 @@ ul {
 .hero3 {
   background: url('../images/uploads/celeb-hero-single.jpg') no-repeat;
   height: 538px;
+}
+.common-hero-scroll {
+    height: 100px;
+    background: #0f2133;
 }
 .common-hero {
   height: 385px;
@@ -6408,7 +6416,7 @@ ul {
 }
 .form-style-1 input,
 .form-style-1 select {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 12px;
   color: #abb7c4;
   font-weight: 300;
@@ -6444,6 +6452,17 @@ ul {
   background: #dd003f;
   width: 100%;
 }
+
+.form-style-1 input.reset {
+    font-family: 'Dosis', sans-serif;
+    font-size: 14px;
+    color: #000 !important;
+    font-weight: bold;
+    text-transform: uppercase;
+    background: #dcf836 !important;
+    width: 100%;
+}
+
 .form-style-1 .group-ip {
   display: -webkit-flex;
   display: -moz-box;
@@ -6457,7 +6476,7 @@ ul {
   background-color: #233a50;
 }
 .form-style-1 .group-ip .ui.multiple.dropdown > .text {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 12px;
   color: #abb7c4;
   font-weight: 300;
@@ -6465,7 +6484,7 @@ ul {
   margin-top: 8px;
 }
 .form-style-1 .group-ip .ui.multiple.dropdown .menu > .item {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 12px;
   color: #abb7c4;
   font-weight: 300;
@@ -6473,7 +6492,7 @@ ul {
   border-top: 1px solid #405266;
 }
 .form-style-1 .group-ip .ui.multiple.dropdown > .label {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 12px;
   color: #ffffff;
   font-weight: 300;
@@ -6607,7 +6626,7 @@ ul {
   text-transform: none;
 }
 .celebrity-items .ceb-item span {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: #abb7c4;
   color: #abb7c4;
   font-weight: 300;
@@ -6662,7 +6681,7 @@ ul {
   text-transform: none;
 }
 .ceb-item-style-2 span {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 12px;
   color: #abb7c4;
   font-weight: 300;
@@ -6765,7 +6784,7 @@ p.ceb-single {
   }
 }
 .left-content form .email {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 12px;
   color: #abb7c4;
   font-weight: 300;
@@ -6934,7 +6953,7 @@ p.ceb-single {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 25px;
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: #abb7c4;
   color: #222222;
   font-weight: 600;
@@ -7932,7 +7951,7 @@ header .top-search input {
   height: 46px;
   border: none;
   background-color: #233a50 !important;
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: #abb7c4;
   color: #abb7c4;
   font-weight: 300;
@@ -8194,7 +8213,7 @@ footer .flex-parent-ft .flex-child-ft ul li {
   margin-bottom: 5px;
 }
 footer .flex-parent-ft .flex-child-ft ul li a {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 14px;
   color: #abb7c4;
   font-weight: regular;
@@ -8214,7 +8233,7 @@ footer .flex-parent-ft .flex-child-ft form {
   margin-bottom: 20px;
 }
 footer .flex-parent-ft .flex-child-ft form input {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 12px;
   color: #abb7c4;
   font-weight: 300;

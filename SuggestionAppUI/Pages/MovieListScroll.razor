@@ -1,0 +1,371 @@
+﻿@page "/MovieListScroll"
+@inject IMovieDbData movieData
+@inject IMovieListData movieListData;
+@inject IMovieListData movieListData
+@inject IMovieDbData movieDbData;
+@inject IGenreData genreData;
+
+@inject ApiMovie apiMovie
+@inject NavigationManager navManager
+
+@if(isLoading)
+{
+    <div id="preloader">
+    <div id="status">
+        <span></span>
+        <span></span>
+    </div>
+</div>
+}
+
+<style>
+.ht-footer {
+    display:none !important;
+}
+.topbar-filter {
+margin-bottom: 0px !important;
+}
+
+.infinite-scroll::-webkit-scrollbar {
+  width: 1em;
+}
+ 
+.infinite-scroll::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+ 
+.infinite-scroll::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+
+.page-single {
+    padding: 40px 0;
+}
+
+</style>
+
+<div class="buster-light">
+    <div class="hero common-hero-scroll">
+    </div>
+    <div class="page-single movie_list">
+        <div class="container">
+            <div class="row ipad-width2">
+                <div class="col-md-8 col-sm-12 col-xs-12">
+                    <div class="topbar-filter">
+                        <p>Found <span>@_movieCount movies</span> in total</p>
+                        <label>Sort by:</label>
+                        <select @onchange="SortMovieList">
+                            <option value="ratingDsc">Rating Descending</option>
+                            <option value="ratingAsc">Rating Ascending</option>
+                            <option value="dateDsc">Release Date Descending</option>
+                            <option value="dateAsc">Release Date Ascending</option>
+                            <option value="listTotalDesc">In x Lists Descending</option>
+                            <option value="listTotalAsc">In x Lists Ascending</option>
+                        </select>
+                        <a href="movielist_light.html" class="list"><i class="ion-ios-list-outline active"></i></a>
+                        <a href="moviegrid_light.html" class="grid"><i class="ion-grid"></i></a>
+                    </div>
+                    @if (_movieList is not null)
+                    {
+                        <div class="infinite-scroll" style="height:720px; overflow-y:scroll" tabindex="-1">
+                          <Virtualize Items="@_movieList" Context="movie" OverscanCount= "10">
+                          
+
+                            <div class="movie-item-style-2" >
+                                <img class="alink" src="@(_apiConfiguration.Images.SecureBaseUrl + "w342" + movie.PosterPath)" alt="" @onclick="@(() => LoadMovie(@movie.TmdbId.ToString()))">
+                                <div class="mv-item-infor">
+                                    <h6><a class="alink" @onclick="@(() => LoadMovie(@movie.TmdbId.ToString()))">@movie.Title <span>(@movie.Year)</span></a></h6>
+                                    <p class="rate"><i class="ion-android-star"></i><span>@movie.ImDbRating</span> /10</p>
+                                    <p class="describe"> @(movie.Overview.Length > 300 ? movie.Overview.Substring(0, 300) : movie.Overview) ...</p>
+                                    <p class=""><span class="font-weight-bold">Run Time: </span>@movie.RuntimeMins mins    .    .     <span class="font-weight-bold">Release: </span><span> @( string.IsNullOrEmpty( movie.ReleaseDate) ? "" : Convert.ToDateTime(movie.ReleaseDate).ToString("MMMM dd, yyyy"))</span></p>
+                                    <p><span class="font-weight-bold" >Director:</span> <a class="alink"  @onclick="@(() => FilterByDirectorName(@movie.Directors))">@movie.Directors</a></p>
+                                    <p><span class="font-weight-bold" >Genres:</span>@movie.Genres </p>
+                                    <p><span class="font-weight-bold" >Lists:</span> @(string.Join(",", movie.MemberOf.Select(x => x.Name))) </p>
+                                </div>
+                            </div>
+                        </Virtualize>
+                        </div>
+                    }
+
+                </div>
+                <div class="col-md-4 col-sm-12 col-xs-12">
+                    <div class="sidebar">
+                        <div class="searh-form">
+                            <h4 class="sb-title">Search for movie</h4>
+                            <form class="form-style-1" action="#">
+                                <div class="row">
+                                    <div class="col-md-12 form-it">
+                                        <label>Title</label>
+                                        <input type="text" @bind="@FilterTitle" @oninput="@((e) => { FilterTitle=(string)e.Value;})">
+                                    </div>
+                                    <div class="col-md-12 form-it">
+                                        <label>Director</label>
+                                        <input type="text" @bind="@FilterDirector" @oninput="@((e) => { FilterDirector=(string)e.Value;})">
+                                    </div>
+                                    <div class="col-md-12 form-it">
+                                        <label>Genres & Subgenres</label>
+                                            <select  @onchange="SelectedGenreChange" class="ui fluid dropdown" multiple="">  
+                                                <option value="">Enter to filter genres</option>
+
+                                                @if(_genres is not null)
+                                                {
+                                                   @foreach(var genre in _genres)
+                                                    {
+                                                      <option >@genre.Name</option>
+                                                    } 
+                                                }
+
+                                            </select>
+
+
+                                    </div>
+                                    <div class="col-md-12 form-it">
+                                        <label>Rating Range</label>
+
+                                        <select  @bind="@filterRange">
+                                            <option value="">No Range</option>
+                                            <option value="0to3">0 to 3</option>
+                                            <option value="3to6">3.1 to 6</option>
+                                            <option value="6to9">6.1 to 9</option>
+                                            <option value="9to10">9.1 to 10</option>
+                                        </select>
+
+                                    </div>
+                                    <div class="col-md-12 form-it">
+                                        <label>Release Year</label>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <input type="number" min="1900" max="@DateTime.Now.Year" @bind="@FilterFromYear" @oninput="@((e) => { FilterFromYear=(string)e.Value;})">
+
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input type="number"min="1900" max="@DateTime.Now.Year" @bind="@FilterToYear" @oninput="@((e) => { FilterToYear=(string)e.Value;})">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 ">
+                                        <input class="submit" type="button" value="submit" @onclick="FilterSubmit">
+                                        
+                                    </div>
+                                     <div class="col-md-6 ">
+                                        <input class="reset" type="button" value="reset" @onclick="Reset">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    bool isLoading = true;
+
+    private bool _firstRender = true;
+    private List<MovieDbModel> _movieList;
+    private List<MovieListModel> _lists;
+    private List<GenreModel> _genres;
+
+    private int _page = 0;
+    private int _totalPages = 0;
+    private int _itemPerPage = 5;
+    private APIConfiguration _apiConfiguration;
+    private int _movieCount = 0;
+
+    private int pagesBefore = 0;
+    private int pagesAfter = 0;
+
+    private string FilterTitle { get; set; } = "";
+    private string FilterDirector { get; set; } = "";
+    private string FilterFromYear  { get; set; } = "";
+    private string FilterToYear  { get; set; } = "";
+    private string? filterRange { get; set; } = "";
+    private string[] selectedGenre { get; set; } = new string[] { };
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+
+        _firstRender = firstRender;
+
+        if (firstRender)
+        {
+            isLoading = true;
+
+
+
+            _apiConfiguration = await apiMovie.GetConfiguration();
+
+            _movieList = await movieDbData.GetAllMovies();
+
+            _genres = await genreData.GetAllGenre();
+            _genres = _genres.OrderBy(f => f.Name).ToList();
+
+            _lists = await movieListData.GetAllLists();
+            _movieCount = _movieList.Count();
+            UpdatePage();
+
+            isLoading = false;
+            StateHasChanged();
+
+
+        }
+
+    }
+
+    protected void UpdatePage()
+    {
+        _totalPages = (_movieCount / _itemPerPage);
+
+        //if has fractional remainder, add 1
+
+        if (_movieCount % _itemPerPage > 0)
+        {
+            _totalPages++;
+        }
+
+        pagesBefore = _page - 2;
+        pagesAfter = _page + 3;
+
+        if (pagesBefore < 1)
+        {
+            pagesBefore = 1;
+        }
+
+        if (pagesAfter > _totalPages)
+        {
+            pagesAfter = _totalPages;
+        }
+    }
+
+    public void LoadMovie(string MovieId)
+    {
+
+        navManager.NavigateTo("/Movie/" + MovieId);
+    }
+
+    protected void NavigatePage(int page)
+    {
+        _page = --page;
+        UpdatePage();
+        StateHasChanged();
+    }
+
+    protected void UpdateMoviePerPage(ChangeEventArgs e)
+    {
+        if (e.Value is not null)
+        {
+            _itemPerPage = int.Parse(e.Value.ToString());
+            UpdatePage();
+            StateHasChanged();
+        }
+
+    }
+
+    protected void ResetPagination()
+    {
+        _page = 0;
+        _movieCount = _movieList.Count();
+        UpdatePage();
+    }
+
+    protected async void FilterSubmit()
+    {
+        var output = await movieDbData.GetAllMovies();
+
+        if (FilterTitle.Length > 3)
+        {
+            output = output.Where(f => f.Title.Contains(FilterTitle, StringComparison.InvariantCultureIgnoreCase)).ToList();
+
+        }
+
+        if (FilterDirector.Length > 3)
+        {
+            output = output.Where(f => f.Directors.Contains(FilterDirector, StringComparison.InvariantCultureIgnoreCase)).ToList();
+
+        }
+
+        if (FilterFromYear.Length > 3 && FilterToYear.Length > 3)
+        {
+            output = output.Where(f => f.Year >= Convert.ToInt16(FilterFromYear) && f.Year <= Convert.ToInt16(FilterToYear)).ToList();
+
+        }
+
+
+        if(selectedGenre.Count() > 0)
+        {
+
+           output = (output.Where(f => f.Genres.Split(',').ToList<string>().Any(x=> selectedGenre.Any(y=> x.Contains(y)))).ToList());
+
+ 
+        }
+
+        //Filter by Range
+        if (!string.IsNullOrEmpty(filterRange))
+        {
+            output = filterRange switch
+        {
+            "0to3" => output.Where(f=> f.ImDbRating <= Convert.ToDouble(3)).ToList(),
+            "3to6" =>  output.Where(f=> f.ImDbRating > Convert.ToDouble(3) && f.ImDbRating <= Convert.ToDouble(6)).ToList(),
+            "6to9" => output.Where(f=> f.ImDbRating > Convert.ToDouble(6) && f.ImDbRating <= Convert.ToDouble(9)).ToList(),
+            "9to10" =>  output.Where(f=> f.ImDbRating > Convert.ToDouble(9)).ToList(),
+            _ => output,
+        };
+        }
+
+        _movieList = output;
+        ResetPagination();
+    }
+
+    protected async void FilterByDirectorName(string director)
+    {
+        var output = await movieDbData.GetAllMovies();
+
+        output = output.Where(f => f.Directors.Contains(director, StringComparison.InvariantCultureIgnoreCase)).ToList();
+        FilterDirector = director;
+
+        ResetPagination();
+    }
+
+    protected async void Reset()
+    {
+        FilterTitle = "";
+        FilterDirector  = "";
+        FilterFromYear   = "";
+        FilterToYear = "";
+        _movieList = await movieDbData.GetAllMovies();
+        ResetPagination();
+    }
+
+    protected void SortMovieList(ChangeEventArgs e)
+    {
+      
+
+        var output = e.Value.ToString() switch
+        {
+            "ratingDsc" => _movieList.OrderByDescending(f=> f.ImDbRating).ToList(),
+            "ratingAsc" =>  _movieList.OrderBy(f=> f.ImDbRating).ToList(),
+            "dateDsc" => _movieList.OrderByDescending(f=> f.ReleaseDate).ToList(),
+            "dateAsc" =>  _movieList.OrderBy(f=> f.ReleaseDate).ToList(),
+            "listTotalDesc" => _movieList.OrderByDescending(f=> f.MemberOf.Count).ToList(),
+            "listTotalAsc" =>  _movieList.OrderBy(f=> f.MemberOf.Count).ToList(),
+            _ => _movieList,
+        };
+
+
+        _movieList = output;
+        ResetPagination();
+    }
+    protected void UpdateMovieGenres(ChangeEventArgs e)
+    {
+        var values = e.Value.ToString();
+    }
+
+       protected void SelectedGenreChange(ChangeEventArgs e)
+    {
+        selectedGenre = (string[])e.Value;
+    }
+}

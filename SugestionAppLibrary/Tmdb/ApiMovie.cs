@@ -16,6 +16,8 @@ using TMDbLib.Objects.Search;
 using TMDbLib.Objects.Reviews;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
+using TMDbLib.Objects.Find;
+
 namespace SugestionAppLibrary.Tmdb;
 
 public class ApiMovie
@@ -33,17 +35,22 @@ public class ApiMovie
         _configuration = configuration;
         _client = new TMDbClient(_configuration.GetValue<string>("TMDBApiKey:Value"));
     }
+
     public async Task<int> getTmdbIdByImdbId(string imdbId)
     {
 
-        //Get the TMDB Id using the ImdbId in the database. After getting the id, save on database to avoid new api call
+        //Get the TMDB Id, posterpath e overview, using the ImdbId in the database. After getting the id, save on database to avoid new api call
 
-        var movieTmdb = _client.FindAsync(TMDbLib.Objects.Find.FindExternalSource.Imdb, imdbId).Result;
+        FindContainer? movieTmdb = _client.FindAsync(TMDbLib.Objects.Find.FindExternalSource.Imdb, imdbId).Result;
         var moviedb = await _movies.GetMovieByImdbId(imdbId);
 
-        if (moviedb is not null && movieTmdb is not null && movieTmdb.MovieResults.FirstOrDefault().Id > 0)
+        if (moviedb is not null && movieTmdb is not null && movieTmdb.MovieResults.Count > 0)
         {
-            moviedb.TmdbId = movieTmdb.MovieResults.FirstOrDefault().Id;
+            var movieFromApi = movieTmdb.MovieResults.FirstOrDefault();
+            moviedb.TmdbId = movieFromApi.Id;
+            moviedb.Overview = movieFromApi.Overview;
+            moviedb.PosterPath = movieFromApi.PosterPath;
+            moviedb.ReleaseDate = movieFromApi.ReleaseDate?.ToString("yyyy-MM-dd");
             await _movies.UpdateMovie(moviedb);
             return moviedb.TmdbId;
         }
