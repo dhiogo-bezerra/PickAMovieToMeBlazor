@@ -1,0 +1,81 @@
+﻿@page "/MovieGuess/"
+
+@using TMDbLib.Objects.Configuration
+@using TMDbLib.Objects.General
+@using TMDbLib.Objects.Movies
+@inject ICategoryData categoryData
+@inject IUserData userData
+@inject IMovieDbData movieData
+@inject NavigationManager navManager
+@inject AuthenticationStateProvider authProvider
+@inject ApiMovie apiMovie
+@inject IJSRuntime jsRunTime
+@inject IMovieListData movieListData;
+
+
+
+<PageTitle>  Guess The Movie </PageTitle>
+
+
+
+<div class="buster-light">
+    <div class="hero common-hero-scroll">
+    </div>
+    <div class="page-single movie_list">
+        <div class="container">
+            <div class="row ipad-width2">
+                <div class="col-md-8 col-sm-12 col-xs-12">
+                    <p> <h2>@movieTitle</h2></p>
+                    <h6> Year: </h6> <p>@movieYear</p>
+                    <h6> Genres: </h6> <p>@movieGenres</p>
+                    <h6> Score: </h6> <p>@movieVoteAverage</p>
+                    <h6> Run Time: </h6> <p>@movieRunTime</p>
+                    <h6> Original: </h6> <p>@movieOriginalLanguage</p>
+                    <h6> Tagline: </h6> <p>@tagline</p>
+                    <h6> Writers: </h6> <p>@movieWriters</p>
+                    <h6>Actor: </h6> <p>@movieActor</p>
+                    <h6> KeyWords: </h6> <p>@movieKeywords</p>
+                    <h6> Director: </h6> <p>@movieDirector</p>
+
+                    <div class="mvsingle-item media-item">
+                        @if (backdrop is not null)
+                        {
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="blog-item-style-2">
+                                        <a href="@(apiConfiguration.Images.SecureBaseUrl + "original" + backdrop.FilePath)" target="_blank" rel="noopener noreferrer"><img src="@(apiConfiguration.Images.SecureBaseUrl + "w780" + backdrop.FilePath)" alt=""></a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-12 col-xs-12">
+                    <div class="sidebar">
+                        <h1 class="score @classPontuation">@pontuation</h1>
+                        <div class="searh-form">
+                            <h5 class="sb-title">Guess the movie</h5>
+                              <p>@message</p>
+                            <form class="form-style-1">
+                                <div class="row">
+                                    <div class="col-md-12 form-it">
+                                        <label>Enter one movie name: </label>
+                                        <input type="text" @bind="@fieldGuess" @oninput="@((e) => { fieldGuess=(string)e.Value;})">
+                                    </div>
+                                    <div class="col-md-6 ">
+                                        <input class="submit @btnStatus" type="button" value="Guess" @onclick="SubmitGuess">
+                                        <input class="submit @newGuessStatus" type="button" value="New Game" @onclick="NewGuess">
+                                    </div>
+                                    <div class="col-md-6 ">
+                                        <input class="reset @btnStatus" type="button" value="Another Clue" @onclick="GetAnotherClue">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

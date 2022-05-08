@@ -76,7 +76,7 @@ margin-bottom: 0px !important;
                                 <img class="alink" src="@(_apiConfiguration.Images.SecureBaseUrl + "w342" + movie.PosterPath)" alt="" @onclick="@(() => LoadMovie(@movie.TmdbId.ToString()))">
                                 <div class="mv-item-infor">
                                     <h6><a class="alink" @onclick="@(() => LoadMovie(@movie.TmdbId.ToString()))">@movie.Title <span>(@movie.Year)</span></a></h6>
-                                    <p class="rate"><i class="ion-android-star"></i><span>@movie.ImDbRating</span> /10</p>
+                                    <p class="rate"><i class="ion-android-star"></i><span>@movie.VoteAverage</span> /10</p>
                                     <p class="describe"> @(movie.Overview.Length > 300 ? movie.Overview.Substring(0, 300) : movie.Overview) ...</p>
                                     <p class=""><span class="font-weight-bold">Run Time: </span>@movie.RuntimeMins mins    .    .     <span class="font-weight-bold">Release: </span><span> @( string.IsNullOrEmpty( movie.ReleaseDate) ? "" : Convert.ToDateTime(movie.ReleaseDate).ToString("MMMM dd, yyyy"))</span></p>
                                     <p><span class="font-weight-bold" >Director:</span> <a class="alink"  @onclick="@(() => FilterByDirectorName(@movie.Directors))">@movie.Directors</a></p>
@@ -308,10 +308,10 @@ margin-bottom: 0px !important;
         {
             output = filterRange switch
         {
-            "0to3" => output.Where(f=> f.ImDbRating <= Convert.ToDouble(3)).ToList(),
-            "3to6" =>  output.Where(f=> f.ImDbRating > Convert.ToDouble(3) && f.ImDbRating <= Convert.ToDouble(6)).ToList(),
-            "6to9" => output.Where(f=> f.ImDbRating > Convert.ToDouble(6) && f.ImDbRating <= Convert.ToDouble(9)).ToList(),
-            "9to10" =>  output.Where(f=> f.ImDbRating > Convert.ToDouble(9)).ToList(),
+            "0to3" => output.Where(f=> f.VoteAverage <= Convert.ToDouble(3)).ToList(),
+            "3to6" =>  output.Where(f=> f.VoteAverage > Convert.ToDouble(3) && f.VoteAverage <= Convert.ToDouble(6)).ToList(),
+            "6to9" => output.Where(f=> f.VoteAverage > Convert.ToDouble(6) && f.VoteAverage <= Convert.ToDouble(9)).ToList(),
+            "9to10" =>  output.Where(f=> f.VoteAverage > Convert.ToDouble(9)).ToList(),
             _ => output,
         };
         }
@@ -346,8 +346,8 @@ margin-bottom: 0px !important;
 
         var output = e.Value.ToString() switch
         {
-            "ratingDsc" => _movieList.OrderByDescending(f=> f.ImDbRating).ToList(),
-            "ratingAsc" =>  _movieList.OrderBy(f=> f.ImDbRating).ToList(),
+            "ratingDsc" => _movieList.OrderByDescending(f=> f.VoteAverage).ToList(),
+            "ratingAsc" =>  _movieList.OrderBy(f=> f.VoteAverage).ToList(),
             "dateDsc" => _movieList.OrderByDescending(f=> f.ReleaseDate).ToList(),
             "dateAsc" =>  _movieList.OrderBy(f=> f.ReleaseDate).ToList(),
             "listTotalDesc" => _movieList.OrderByDescending(f=> f.MemberOf.Count).ToList(),

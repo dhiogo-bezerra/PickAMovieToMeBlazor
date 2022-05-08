@@ -2,9 +2,37 @@
 
 /*Personal modifications on template and blazor css */
 
+
+
 html, body {
     font-family: 'Roboto', sans-serif;
 }
+
+.score {
+ 
+    top: 0;
+    right: 0;
+    font-size: 50px;
+    line-height: 70px;
+    color: #fff;
+    width: 120px;
+    text-align: center;
+    z-index: 10;
+    margin-bottom: 3rem;
+}
+
+  .score.green {
+        background: #29a744;
+        border-right: 2px solid #1e9237
+    }
+
+    .score.red {
+        background: #dc3546;
+    }
+
+    .score.yellow {
+        background: #fec107;
+    }
 
 header .navbar-default .navbar-nav li a i {
     margin-left: 0.4rem;

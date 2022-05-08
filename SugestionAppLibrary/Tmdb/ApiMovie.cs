@@ -17,6 +17,7 @@ using TMDbLib.Objects.Reviews;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using TMDbLib.Objects.Find;
+using TMDbLib.Objects.Languages;
 
 namespace SugestionAppLibrary.Tmdb;
 
@@ -50,7 +51,11 @@ public class ApiMovie
             moviedb.TmdbId = movieFromApi.Id;
             moviedb.Overview = movieFromApi.Overview;
             moviedb.PosterPath = movieFromApi.PosterPath;
+            moviedb.VoteAverage = movieFromApi.VoteAverage;
+            moviedb.VoteCount = movieFromApi.VoteCount;
             moviedb.ReleaseDate = movieFromApi.ReleaseDate?.ToString("yyyy-MM-dd");
+            moviedb.Popularity = movieFromApi.Popularity;
+            moviedb.OriginalLanguage = movieFromApi.OriginalLanguage;
             await _movies.UpdateMovie(moviedb);
             return moviedb.TmdbId;
         }
@@ -62,9 +67,9 @@ public class ApiMovie
     public async Task<Movie> GetMovie(int movieId)
     {
 
-		return await _client.GetMovieAsync(movieId, MovieMethods.Keywords | MovieMethods.Credits | MovieMethods.Images | MovieMethods.Recommendations | MovieMethods.Videos | MovieMethods.WatchProviders);
+        return await _client.GetMovieAsync(movieId, MovieMethods.Keywords | MovieMethods.Credits | MovieMethods.Images | MovieMethods.Recommendations | MovieMethods.Videos | MovieMethods.WatchProviders);
 
-	}
+    }
 
     public async Task<APIConfiguration> GetConfiguration()
     {
@@ -79,4 +84,43 @@ public class ApiMovie
         return output;
     }
 
+    public async Task<List<Language>> GetLanguages()
+    {
+        var output = _cacheConfiguration.Get<List<Language>>("LanguagesIso639");
+
+        if (output is null)
+        {
+            output = await _client.GetLanguagesAsync();
+            var languagesAvailable = await GetAllLanguagesAvailable();
+            output = output.Where(f => languagesAvailable.Contains(f.Iso_639_1)).ToList();
+
+            _cacheConfiguration.Set("LanguagesIso639", output, TimeSpan.FromDays(1));
+        }
+        return output;
+    }
+
+    private async Task<HashSet<string>> GetAllLanguagesAvailable()
+    {
+        var movies = await _movies.GetAllMovies();
+
+        //Get all Original Languages on database
+
+        var distinctLanguage = movies
+        .GroupBy(p => p.OriginalLanguage)
+        .Select(g => g.First())
+        .ToList();
+
+        var hashset = new HashSet<string>();
+        foreach (var item in distinctLanguage)
+        {
+
+            hashset.Add(item.OriginalLanguage.Trim());
+
+        }
+
+        return hashset;
+
+    }
 }
+
+

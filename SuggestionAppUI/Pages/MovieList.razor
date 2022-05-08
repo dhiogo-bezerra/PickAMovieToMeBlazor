@@ -1,11 +1,12 @@
 ﻿@page "/MovieList"
+@using System.Globalization
 @inject IMovieDbData movieData
 @inject IMovieListData movieListData;
 @inject IMovieListData movieListData
 @inject IMovieDbData movieDbData;
 @inject IGenreData genreData;
 @inject IJSRuntime jsRunTime;
-@inject ProtectedSessionStorage sessionStorage;
+@inject ProtectedLocalStorage localStorage;
 
 @inject ApiMovie apiMovie
 @inject NavigationManager navManager
@@ -24,6 +25,8 @@
                         <select @onchange="SortMovieList">
                             <option value="ratingDsc">Rating Descending</option>
                             <option value="ratingAsc">Rating Ascending</option>
+                            <option value="popularityDsc">Popularity Descending</option>
+                            <option value="popularityAsc">Popularity Ascending</option>
                             <option value="dateDsc">Release Date Descending</option>
                             <option value="dateAsc">Release Date Ascending</option>
                             <option value="listTotalDesc">In x Lists Descending</option>
@@ -40,12 +43,13 @@
                                 <img class="alink" src="@(_apiConfiguration.Images.SecureBaseUrl + "w342" + movie.PosterPath)" alt="" @onclick="@(() => LoadMovie(@movie.TmdbId.ToString()))">
                                 <div class="mv-item-infor">
                                     <h6><a class="alink" @onclick="@(() => LoadMovie(@movie.TmdbId.ToString()))">@movie.Title <span>(@movie.Year)</span></a></h6>
-                                    <p class="rate"><i class="ion-android-star"></i><span>@movie.ImDbRating</span> /10</p>
+                                    <p class="rate"><i class="ion-android-star"></i><span>@movie.VoteAverage</span> /10</p>
                                     <p class="describe"> @(movie.Overview.Length > 300 ? movie.Overview.Substring(0, 300) : movie.Overview) ...</p>
                                     <p class=""><span class="font-weight-bold">Run Time: </span>@movie.RuntimeMins mins    .    .     <span class="font-weight-bold">Release: </span><span> @( string.IsNullOrEmpty( movie.ReleaseDate) ? "" : Convert.ToDateTime(movie.ReleaseDate).ToString("MMMM dd, yyyy"))</span></p>
-                                    <p><span class="font-weight-bold">Director:</span> <a class="alink" @onclick="@(() => FilterByDirectorName(@movie.Directors))">@movie.Directors</a></p>
-                                    <p><span class="font-weight-bold">Genres:</span>@movie.Genres </p>
-                                    <p><span class="font-weight-bold">Lists:</span> @(string.Join(",", movie.MemberOf.Select(x => x.Name))) </p>
+                                    <p><span class="font-weight-bold">Director: </span> <a class="alink" @onclick="@(() => FilterByDirectorName(@movie.Directors))">@movie.Directors</a></p>
+                                    <p><span class="font-weight-bold">Original Language: </span>@(iso339Languages.First(f=> f.Iso_639_1.Equals(movie.OriginalLanguage)).EnglishName)</p>
+                                    <p><span class="font-weight-bold">Genres: </span>@movie.Genres </p>
+                                    <p><span class="font-weight-bold">Lists: </span> @(string.Join(",", movie.MemberOf.Select(x => x.Name))) </p>
                                 </div>
                             </div>
                         }
@@ -104,6 +108,25 @@
                                         <label>Director</label>
                                         <input type="text" @bind="@FilterDirector" @oninput="@((e) => { FilterDirector=(string)e.Value;})">
                                     </div>
+
+                                      <div class="col-md-12 form-it">
+                                         <label for="languageInput">Original Language</label>
+                                           <input type="text" id="languageInput" list="languages" name="languages"  @onchange="SelectedLanguageChange">
+                                      
+                                        <datalist id="languages">
+                                            @if (iso339Languages is not null)
+                                            {
+
+                                                @foreach (var language in iso339Languages)
+                                                {
+                                                    <option value="@language.EnglishName"></option>
+                                                }
+
+                                            }
+                                        </datalist>
+                                        
+                                    </div>
+                                  
                                     <div class="col-md-12 form-it">
                                         <label>Genres & Subgenres</label>
                                         <div class="group-ip">
@@ -113,7 +136,7 @@
                                                 @if (_genres is not null)
                                                 {
                                                     @foreach (var genre in _genres)
-                                                    { 
+                                                    {
                                                         <option>@genre.Name</option>
                                                     }
                                                 }
@@ -122,7 +145,7 @@
                                         </div>
 
                                     </div>
-                                   <div class="col-md-12 form-it">
+                                    <div class="col-md-12 form-it">
                                         <label>Lists</label>
                                         <div class="group-ip">
                                             <select @onchange="SelectedListChange" class="ui fluid dropdown" id="dropdownList" multiple="">
@@ -131,7 +154,7 @@
                                                 @if (_lists is not null)
                                                 {
                                                     @foreach (var list in _lists)
-                                                    { 
+                                                    {
                                                         <option value="@list.Id">@list.Name</option>
                                                     }
                                                 }
@@ -143,7 +166,7 @@
                                     <div class="col-md-12 form-it">
                                         <label>Rating Range</label>
 
-                                        <select @bind="@filterRange">
+                                        <select @bind="@FilterRange">
                                             <option value="">No Range</option>
                                             <option value="0to3">0 to 3</option>
                                             <option value="3to6">3.1 to 6</option>

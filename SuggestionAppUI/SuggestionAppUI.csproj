@@ -34,6 +34,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\images\lists\" />
+    <Folder Include="wwwroot\Json\" />
   </ItemGroup>
 
 </Project>

@@ -11,19 +11,20 @@
 <h3>SampleData</h3>
 <div class="buster-light" style="padding-top: 400px;">
 
-@if (listCreated)
-{
-    <h4>Movie List have been created</h4>
-}
-else
-{
-      <button class="btn btn-primary" @onclick="CreateMovieList">Create Movie List</button>
-}
+    @if (listCreated)
+    {
+        <h4>Movie List have been created</h4>
+    }
+    else
+    {
+        <button class="btn btn-primary" @onclick="CreateMovieList">Create Movie List</button>
+    }
 
-   <button class="btn btn-primary" @onclick="CreateMovieDatabaseFromFiles">Create Movies from file</button>
+    <button class="btn btn-primary" @onclick="CreateMovieDatabaseFromFiles">Create Movies from file</button>
 
     <button class="btn btn-primary" @onclick="UpdateMovieDatabase">Update Movie on Database</button>
-        <button class="btn btn-primary" @onclick="CreateGenres">Update Genres on Database</button>
+    <button class="btn btn-primary" @onclick="CreateGenres">Update Genres on Database</button>
+    <button class="btn btn-primary" @onclick="GetAllLanguages">GetAllLanguages</button>
 
 </div>
 @code {
@@ -64,7 +65,7 @@ else
                         foreach (MovieDbModel movie in movieListFile)
                         {
 
-                            //Check if movie is in database. If not, add 
+                            //Check if movie is in database. If not, add
                             var movieInDatabase = await movieDbData.GetMovieByImdbId(movie.Const);
 
                             if (movieInDatabase is null)
@@ -99,7 +100,8 @@ else
                 }
 
             }
-        } catch (Exception ex)
+        }
+        catch (Exception ex)
         {
             var error = ex.Message;
         }
@@ -112,46 +114,22 @@ else
     {
         var movieLists = await movieListData.GetAllLists();
 
-        if(movieLists?.Count > 0)
+        if (movieLists?.Count > 0)
         {
             listCreated = true;
             return;
         }
 
-        MovieListModel list = new()
-            {
-                Name = "1001 Movies You Must See Before You Die",
-                Description = "1001 Movies You Must See Before You Die is a film reference book edited by Steven Jay Schneider with original essays on each film contributed by over 70 film critics.",
-
-            };
-
-        await movieListData.CreateList(list);
-
-        list = new()
-            {
-                Name = "AFI 100",
-                Description = "The 100 Greatest American Films Of All Time by the American Film Institute."
-            };
-        await movieListData.CreateList(list);
-        list = new()
-            {
-                Name = "Criterion Colletcion",
-                Description = "Movies distributed by Criterion Collection. The Criterion Collection, Inc. is an American home-video distribution company that focuses on licensing, restoring and distributing 'important classic and contemporary films.' Criterion serves film and media scholars, cinephiles and public and academic libraries. "
-            };
-        await movieListData.CreateList(list);
-        list = new()
-            {
-                Name = "r/TrueFilm",
-                Description = "List made by the most voted movies in the subreddit TrueFilm: : An in-depth discussion of film",
-            };
-        await movieListData.CreateList(list);
-        list = new()
-            {
-                Name = "Martin Scorsese Recommended movies",
-                Description = "A list curated by Martin Scorsese."
-            };
-
-        await movieListData.CreateList(list);
+        await movieListData.CreateList(new MovieListModel { Name = "1001 Movies You Must See Before You Die", Description = "1001 Movies You Must See Before You Die" });
+        await movieListData.CreateList(new MovieListModel { Name = "AFI 100", Description = "The 100 Greatest American Films Of All Time by the American Film Institute." });
+        await movieListData.CreateList(new MovieListModel { Name = "Criterion Colletcion", Description = "Movies distributed by Criterion Collection. The Criterion Collection, Inc. is an American home-video distribution company that focuses on licensing, restoring and distributing 'important classic and contemporary films.' Criterion serves film and media scholars, cinephiles and public and academic libraries." });
+        await movieListData.CreateList(new MovieListModel { Name = "r/TrueFilm", Description = "List made by the most voted movies in the subreddit TrueFilm: : An in-depth discussion of film" });
+        await movieListData.CreateList(new MovieListModel { Name = "Martin Scorsese Recommended movies", Description = "A list curated by Martin Scorsese." });
+        await movieListData.CreateList(new MovieListModel { Name = "Cannes", Description = "Cannes Award Winners and Runners-Up: 2019-1939" });
+        await movieListData.CreateList(new MovieListModel { Name = "OscarDirector", Description = "Academy Award for Best Directing: Winners & Nominees" });
+        await movieListData.CreateList(new MovieListModel { Name = "OscarForeign", Description = "Academy Award for Best International Feature Film: Winners & Nominees" });
+        await movieListData.CreateList(new MovieListModel { Name = "OscarPicture", Description = "Academy Award for Best Picture: Winners & Nominees" });
+        await movieListData.CreateList(new MovieListModel { Name = "OscarScreenplay", Description = "Academy Award for Writing (Original Screenplay): Winners & Nominees" });
 
 
 
@@ -163,9 +141,9 @@ else
         try
         {
             var movies = await movieDbData.GetAllMovies();
-            movies = movies.Where(f => string.IsNullOrEmpty(f.ReleaseDate)).ToList();
+            //movies = movies.Where(f => f.TmdbId == 0).ToList();
 
-            foreach(var movie in movies)
+            foreach (var movie in movies)
             {
                 var idTmdb = await apiMovie.getTmdbIdByImdbId(movie.Const);
                 //Sleeping so the api is not called in so short time period
@@ -192,10 +170,10 @@ else
         .Select(g => g.First())
         .ToList();
 
-        var hashset = new HashSet<string>(); 
+        var hashset = new HashSet<string>();
         foreach (var item in dinstinctGenres)
         {
-            foreach(var genre in item.Genres.Split(',').ToList<string>())
+            foreach (var genre in item.Genres.Split(',').ToList<string>())
             {
                 hashset.Add(genre.Trim());
             }
@@ -203,12 +181,35 @@ else
 
         string names = string.Join(",", hashset);
 
-        foreach(var genre in hashset)
+        foreach (var genre in hashset)
         {
             await genreDbData.CreateGenre(new GenreModel { Name = genre });
         }
 
-            //_movieList = _movieList.Take(23).ToList();
+        //_movieList = _movieList.Take(23).ToList();
     }
 
+    public async Task GetAllLanguages()
+    {
+        var movies = await movieDbData.GetAllMovies();
+
+        //Get all Original Languages on database
+
+        var distinctLanguage = movies
+        .GroupBy(p => p.OriginalLanguage)
+        .Select(g => g.First())
+        .ToList();
+
+        var hashset = new HashSet<string>();
+        foreach (var item in distinctLanguage)
+        {
+            
+            hashset.Add(item.OriginalLanguage.Trim());
+            
+        }
+
+        string names = string.Join(",", hashset);
+
+        //_movieList = _movieList.Take(23).ToList();
+    }
 }

@@ -5,8 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SuggestionAppUI.Shared;
-
-
+using TMDbLib.Objects.Languages;
 
 namespace SuggestionAppUI.Pages;
 
@@ -26,7 +25,7 @@ public partial class MovieDetails
     protected MovieGallery movieGalleryComponent;
     protected RelatedMovies relatedMoviesComponent;
     protected MovieLists movieListComponent;
-
+    private List<Language> iso339Languages;
 
     //Variables of Movie to Render
     private string movieId = "";
@@ -45,6 +44,7 @@ public partial class MovieDetails
     private string movieBudget = "";
     private string movieLanguage = "";
     private string movieRevenue = "";
+    private string originalTitle = "";
 
     //Variables Cast and Crew to Render
     private string movieDirector = "";
@@ -67,7 +67,9 @@ public partial class MovieDetails
         {
 
             apiConfiguration = await apiMovie.GetConfiguration();
-            //if not id is provided, get a random movie
+            iso339Languages = await apiMovie.GetLanguages();
+
+            //if id is not provided, get a random movie
 
             int movieIdFromUrl = 0;
 
@@ -144,9 +146,13 @@ public partial class MovieDetails
         movieRunTime = movie.Runtime is null ? " " : movie.Runtime?.ToString();
         movieBudget = movie.Budget == 0 ? "-" : movie.Budget.ToString("C");
         movieRevenue = movie.Revenue == 0 ? "-" : movie.Revenue.ToString("C");
-        movieLanguage = movie.OriginalLanguage;
+        movieLanguage = iso339Languages.First(l => l.Iso_639_1 == movie.OriginalLanguage).EnglishName;
+
+        //If title in english is different from the original title, set in the variable originalTitle
+        originalTitle = movie.OriginalTitle != movie.Title ? movie.OriginalTitle : "";
+
         //Getting movie trailer
-        movieTrailerLink = GetUrlTrailer(movie.Videos.Results);
+      movieTrailerLink = GetUrlTrailer(movie.Videos.Results);
 
         //Credit
         
@@ -156,6 +162,7 @@ public partial class MovieDetails
             movieWriters = string.Join(",", movie.Credits.Crew.Where(d => d.Department == "Writing").ToList().Select(x => x.Name));
             movieStars = string.Join(",", movie.Credits.Cast.Take(8).Select(x => x.Name));
         }
+
         isLoading = false;
         //await jsRunTime.InvokeVoidAsync("ChangeUrl", "/Movie/" + movie.Id);
         StateHasChanged();
