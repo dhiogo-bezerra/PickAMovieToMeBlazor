@@ -1,6 +1,6 @@
 ﻿using MongoDB.Driver;
 
-namespace SugestionAppLibrary.DataAccess
+namespace MozifAppLibrary.DataAccess
 {
     public interface IDbConnection
     {

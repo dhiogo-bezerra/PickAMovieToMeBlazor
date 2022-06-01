@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
-using SugestionAppLibrary.Helpers;
+using MozifAppLibrary.Helpers;
 
-namespace SugestionAppLibrary.DataAccess;
+namespace MozifAppLibrary.DataAccess;
 
 public class MongoMovieDb : IMovieDbData
 {
@@ -97,6 +97,22 @@ public class MongoMovieDb : IMovieDbData
         }
 
     }
+
+    public async Task<List<MovieDbModel>> GetRandomMovie(int count)
+    {
+        try
+        {
+            var movieList = await GetAllMovies();
+            var movie = movieList.GetRandomElements(count);
+            return movie;
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
+
+    }
+
     public Task UpdateMovie(MovieDbModel movie)
     {
         var filter = Builders<MovieDbModel>.Filter.Eq("Id", movie.Id);

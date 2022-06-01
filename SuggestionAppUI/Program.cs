@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Hosting;
-using SuggestionAppUI;
+using MozifAppUI;
 
 var builder = WebApplication.CreateBuilder(args);
 

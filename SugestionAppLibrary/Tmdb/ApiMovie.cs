@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
-using SugestionAppLibrary.DataAccess;
+using MozifAppLibrary.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +19,7 @@ using Microsoft.Extensions.Configuration;
 using TMDbLib.Objects.Find;
 using TMDbLib.Objects.Languages;
 
-namespace SugestionAppLibrary.Tmdb;
+namespace MozifAppLibrary.Tmdb;
 
 public class ApiMovie
 {
@@ -119,6 +119,12 @@ public class ApiMovie
         }
 
         return hashset;
+
+    }
+
+    public async Task GetPerson(string Name)
+    {
+        var retorno = await _client.SearchPersonAsync(Name);
 
     }
 }

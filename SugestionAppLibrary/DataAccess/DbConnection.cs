@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 
-namespace SugestionAppLibrary.DataAccess;
+namespace MozifAppLibrary.DataAccess;
 
 public class DbConnection : IDbConnection
 {

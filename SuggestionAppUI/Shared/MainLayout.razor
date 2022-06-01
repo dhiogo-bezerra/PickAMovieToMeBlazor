@@ -18,7 +18,7 @@
 							<span></span>
 						</div>
 				    </div>
-				    <a href="index_light.html"><img class="logo" src="images/logo1.png" alt="" width="119" height="58"></a>
+				    <a href="" @onclick="@(() => NavPage(""))"><img class="logo" src="images/logo1.png" alt="" width="119" height="58"></a>
 			    </div>
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse flex-parent" id="bs-example-navbar-collapse-1">
@@ -56,6 +56,46 @@
         </article>
     </main>
 </div>
+
+    <!-- footer section-->
+    <footer class="ht-footer">
+        <div class="container">
+            <div class="flex-parent-ft">
+                <div class="flex-child-ft item1">
+                    <a href="index.html"><img class="logo" src="images/logo1.png" alt=""></a>
+                    <p>
+                        
+                    </p>
+                    <p>Contact: <a href="#"> </a></p>
+                </div>
+                <div class="flex-child-ft item2">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a class="alink" @onclick="@(() => NavPage(""))">Home</a></li>
+                        <li><a class="alink"  @onclick="@(() => NavPage("movielist"))">MovieList</a></li>
+                        <li><a class="alink"  @onclick="@(() => NavPage("movie"))">Random Movie</a></li>
+                        <li><a class="alink"   @onclick="@(() => NavPage("movieguess"))">Guess The Movie</a></li>
+                    </ul>
+                </div>
+                <div class="flex-child-ft item3">
+                    <h4>Legal</h4>
+                </div>
+                <div class="flex-child-ft item4">
+                </div>
+                <div class="flex-child-ft item5">
+                </div>
+            </div>
+        </div>
+        <div class="ft-copyright">
+            <div class="ft-left">
+                <p>© 2022 Mozif. All Rights Reserved. Designed by Dhiogo Bezerra.</p>
+            </div>
+            <div class="backtotop">
+                <p><a href="#" id="back-to-top">Back to top  <i class="ion-ios-arrow-thin-up"></i></a></p>
+            </div>
+        </div>
+    </footer>
+    <!-- end of footer section-->
 
 @code {
 

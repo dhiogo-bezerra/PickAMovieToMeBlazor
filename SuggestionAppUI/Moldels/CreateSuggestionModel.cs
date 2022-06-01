@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SuggestionAppUI.Moldels;
+namespace MozifAppUI.Moldels;
 
 public class CreateSuggestionModel
 {

@@ -11,12 +11,12 @@ using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.Web.Virtualization;
 using Microsoft.JSInterop;
-using SuggestionAppUI;
-using SuggestionAppUI.Shared;
+using MozifAppUI;
+using MozifAppUI.Shared;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using TMDbLib.Objects.Languages;
 
-namespace SuggestionAppUI.Pages
+namespace MozifAppUI.Pages
 {
     public partial class MovieList
     {

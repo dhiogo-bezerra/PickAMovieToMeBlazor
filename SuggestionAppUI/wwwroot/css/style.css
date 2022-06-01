@@ -4207,19 +4207,18 @@ ul {
 .cate {
   margin-bottom: 15px;
 }
-.cate span {
-  padding: 3px 5px;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
-.cate span a {
-  font-family: 'Dosis', sans-serif;
-  font-size: 12px;
-  color: #ffffff;
-  font-weight: 700;
-  text-transform: uppercase;
-}
+    .cate span {
+        padding: 3px 5px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        font-family: 'Dosis', sans-serif;
+        font-size: 12px;
+        color: #ffffff;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
 .cate .blue {
   background-color: #1692bb;
 }
@@ -4232,10 +4231,26 @@ ul {
 .cate .orange {
   background-color: #ec5a1a;
 }
+
+.cate .purple {
+  background-color: #5a1aec;
+}
+
+    .cate .red {
+        background-color: #8b0101;
+    }
+    .cate .pink {
+        background-color: #f96cd9;
+    }
+
+    .cate .black {
+        background-color: #1D1C1A;
+    }
+
 .movie_list .movie-item-style-2 img,
 .movie_single .movie-item-style-2 img,
 .userfav_list .movie-item-style-2 img {
-  width: 30%;
+    width: 30%;
 }
 @media (max-width: 767px) {
   .movie_list .movie-item-style-2 img,
@@ -7067,7 +7082,7 @@ p.ceb-single {
   background-color: #00b9ef;
 }
 .slider {
-  background: url('../images/uploads/slider-bg.jpg') no-repeat;
+  /*background: url('../images/uploads/slider-bg.jpg') no-repeat;*/
   background-position: center;
   text-align: center;
   background-size: cover;
@@ -7332,11 +7347,12 @@ p.ceb-single {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ffffff6b;
+    background-color: #020d18;
     /* change if the mask should have another color then white */
     z-index: 99999;
     text-align: center;
     /* makes sure it stays on top */
+
 }
 #preloader img {
   margin-top: 100px;

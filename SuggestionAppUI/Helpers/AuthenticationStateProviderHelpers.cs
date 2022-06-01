@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SuggestionAppUI.Helpers;
+namespace MozifAppUI.Helpers;
 
 public static class AuthenticationStateProviderHelpers
 {

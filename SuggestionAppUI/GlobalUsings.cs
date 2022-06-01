@@ -1,9 +1,9 @@
-﻿global using SugestionAppLibrary.Models;
-global using SugestionAppLibrary.DataAccess;
-global using SugestionAppLibrary.Tmdb;
-global using SuggestionAppUI.Helpers;
+﻿global using MozifAppLibrary.Models;
+global using MozifAppLibrary.DataAccess;
+global using MozifAppLibrary.Tmdb;
+global using MozifAppUI.Helpers;
 global using CurrieTechnologies.Razor.SweetAlert2;
 global using TMDbLib.Objects.Configuration;
 global using TMDbLib.Objects.General;
 global using TMDbLib.Objects.Movies;
-global using SugestionAppLibrary.Helpers;
+global using MozifAppLibrary.Helpers;

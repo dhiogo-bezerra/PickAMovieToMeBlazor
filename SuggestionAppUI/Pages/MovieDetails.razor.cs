@@ -4,10 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using SuggestionAppUI.Shared;
+using MozifAppUI.Shared;
+using MozifAppUI.Shared;
 using TMDbLib.Objects.Languages;
 
-namespace SuggestionAppUI.Pages;
+namespace MozifAppUI.Pages;
 
 public partial class MovieDetails
 {
@@ -24,7 +25,7 @@ public partial class MovieDetails
     protected CastCrew castCrewComponent;
     protected MovieGallery movieGalleryComponent;
     protected RelatedMovies relatedMoviesComponent;
-    protected MovieLists movieListComponent;
+    protected MozifAppUI.Shared.MovieLists movieListComponent;
     private List<Language> iso339Languages;
 
     //Variables of Movie to Render

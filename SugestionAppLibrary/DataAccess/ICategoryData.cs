@@ -1,5 +1,5 @@
 ﻿
-namespace SugestionAppLibrary.DataAccess
+namespace MozifAppLibrary.DataAccess
 {
     public interface ICategoryData
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SugestionAppLibrary.Helpers;
+namespace MozifAppLibrary.Helpers;
 
 public static class EnumerableHelper<E>
 {
@@ -28,6 +28,12 @@ public static class EnumerableExtensions
     {
         return EnumerableHelper<T>.Random(input);
     }
+
+    public static List<T> GetRandomElements<T>(this IEnumerable<T> list, int elementsCount)
+    {
+        return list.OrderBy(arg => Guid.NewGuid()).Take(elementsCount).ToList();
+    }
+
 }
 
 public static class ArrayExtensions

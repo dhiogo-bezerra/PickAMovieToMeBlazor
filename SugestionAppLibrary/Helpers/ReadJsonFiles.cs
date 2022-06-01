@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using SugestionAppLibrary.DataAccess;
+using MozifAppLibrary.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SugestionAppLibrary.Helpers;
+namespace MozifAppLibrary.Helpers;
 
 public class ReadJsonFiles
 {

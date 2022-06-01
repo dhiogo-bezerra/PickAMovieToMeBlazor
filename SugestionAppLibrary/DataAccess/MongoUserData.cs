@@ -1,4 +1,4 @@
-﻿namespace SugestionAppLibrary.DataAccess;
+﻿namespace MozifAppLibrary.DataAccess;
 
 public class MongoUserData : IUserData
 {

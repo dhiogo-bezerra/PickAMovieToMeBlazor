@@ -1,6 +1,6 @@
 ﻿
 
-namespace SugestionAppLibrary.Models
+namespace MozifAppLibrary.Models
 {
     public class BasicAuthorModel
     {

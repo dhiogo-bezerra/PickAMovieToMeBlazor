@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components.Forms;
-namespace SuggestionAppUI.Components;
+namespace MozifAppUI.Components;
 
 public class MyInputRadioGroup<TValue> : InputRadioGroup<TValue>
 {

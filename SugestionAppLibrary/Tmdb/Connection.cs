@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using TMDbLib.Client;
 using TMDbLib.Objects.Movies;
 
-namespace SugestionAppLibrary.Tmdb;
+namespace MozifAppLibrary.Tmdb;
 
 public class Connection
 {

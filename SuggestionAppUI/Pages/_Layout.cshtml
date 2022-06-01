@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Components.Web
-@namespace SuggestionAppUI.Pages
+@namespace MozifAppUI.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 <!DOCTYPE html>
@@ -8,80 +8,133 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <base href="~/" />
-     <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Dosis:400,700,500|Nunito:300,400,600' />
+    <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Dosis:400,700,500|Nunito:300,400,600' />
 
-     	<!-- Mobile specific meta -->
-	<meta name=viewport content="width=device-width, initial-scale=1">
-	<meta name="format-detection" content="telephone-no">
+    <!-- Mobile specific meta -->
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone-no">
 
     <link href="css/site.css" rel="stylesheet" />
     <link href="css/plugins.css" rel="stylesheet" />
     <link href="css/style.css" rel="stylesheet" />
     <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
 
-	<script>
-		function Hidepreloader(){
-		//document.getElementById("preloader").style.display = "none";
-		//document.getElementById("status").style.display = "none";
-		};
+    <script>
+                function Hidepreloader(){
+                //document.getElementById("preloader").style.display = "none";
+                //document.getElementById("status").style.display = "none";
+                };
 
-		function scrollToTab(elementId){
-			var elem = document.getElementById(elementId);
-			console.log(elem);
-			if (elem) {
-				elem.scrollIntoView();
-				//window.location.hash = elementId;
-		}
-		
-	};
+                function scrollToTab(elementId){
+                    var elem = document.getElementById(elementId);
+                    console.log(elem);
+                    if (elem) {
+                        elem.scrollIntoView();
+                        //window.location.hash = elementId;
+                }
 
-		window.ChangeUrl = function(url){
-				 history.pushState(null, '', url);   
-		};
+            };
 
-		function clearDropdownui(){
-			 $('#dropdownGenre').dropdown('clear');  
-			  $('#dropdownList').dropdown('clear');  
-		};
+                window.ChangeUrl = function(url){
+                         history.pushState(null, '', url);
+                };
 
-		 // When the user clicks the button, the page scrolls to the top
-        function OnScrollEvent() {
-            document.documentElement.scrollTop = 0;
-        };
+                function clearDropdownui(){
+                     $('#dropdownGenre').dropdown('clear');
+                      $('#dropdownList').dropdown('clear');
+                };
 
-	function CloseIframeYoutube(){
+                 // When the user clicks the button, the page scrolls to the top
+                function OnScrollEvent() {
+                    document.documentElement.scrollTop = 0;
+                };
 
-		$("#movieTrailer iframe").attr("src", $("#movieTrailer iframe").attr("src"));
-	
-	};
+            function CloseIframeYoutube(){
 
-	        function MultiselectInit() {
+                $("#movieTrailer iframe").attr("src", $("#movieTrailer iframe").attr("src"));
 
-            //js for multi selected
-        var multiselect = $(".ui.fluid.dropdown");
-        multiselect.dropdown({
-            allowLabels: true,
-            clearable: true
-        });
+            };
 
-        multiselect.dropdown({ 'set selected': 'Role1,Role2' });
+                    function MultiselectInit() {
 
-        };
-	</script>
+                    //js for multi selected
+                var multiselect = $(".ui.fluid.dropdown");
+                multiselect.dropdown({
+                    allowLabels: true,
+                    clearable: true
+                });
+
+                multiselect.dropdown({ 'set selected': 'Role1,Role2' });
+
+                };
+
+ function SliderInit(){
+        var multiItem = $('.slick-multiItem');
+     
+             //main slider home 1
+            var multiItemSlider = $('.slick-multiItemSlider');
+            multiItemSlider.slick({
+                infinite: true,
+                slidesToShow: 4,
+                slidesToScroll: 4,
+                arrows: true,
+                draggable:true,
+                autoplay: false,
+                autoplaySpeed: 10000,
+                dots: true
+            });
+
+            
+	//slider movie and tv show home 1, 3
+	multiItem.slick({
+		infinite: true,
+		slidesToShow: 4,
+		slidesToScroll: 4,
+		arrows: false,
+		draggable:true,
+		// autoplay: true,
+		// autoplaySpeed: 2000,
+		dots: true,
+		responsive: [
+	    {
+	      breakpoint: 1024,
+	      settings: {
+	        slidesToShow: 3,
+	        slidesToScroll: 3,
+	        infinite: true,
+	        dots: true
+	      }
+	    },
+	    {
+	      breakpoint: 768,
+	      settings: {
+	        slidesToShow: 2,
+	        slidesToScroll: 2
+	      }
+	    },
+	    {
+	      breakpoint: 480,
+	      settings: {
+	        slidesToShow: 1,
+	        slidesToScroll: 1
+	      }
+	    }
+	  ]
+	});
+
+                };
+    </script>
 
 </head>
 <body>
-@*    <div id="preloader">
-    <img class="logo" src="images/logo1.png" alt="" width="119" height="58">
-    <div id="status">
+    @*    <div id="preloader">
+        <img class="logo" src="images/logo1.png" alt="" width="119" height="58">
+        <div id="status">
         <span></span>
         <span></span>
-    </div>
-</div>*@
-<!--end of preloading-->
-
-
-
+        </div>
+        </div>*@
+    <!--end of preloading-->
     @RenderBody()
 
     <div id="blazor-error-ui">
@@ -95,70 +148,13 @@
         <a class="dismiss">🗙</a>
     </div>
 
-	<!-- footer section-->
-<footer class="ht-footer">
-	<div class="container">
-		<div class="flex-parent-ft">
-			<div class="flex-child-ft item1">
-				 <a href="index.html"><img class="logo" src="images/logo1.png" alt=""></a>
-				 <p>5th Avenue st, manhattan<br>
-				New York, NY 10001</p>
-				<p>Call us: <a href="#">(+01) 202 342 6789</a></p>
-			</div>
-			<div class="flex-child-ft item2">
-				<h4>Resources</h4>
-				<ul>
-					<li><a href="#">About</a></li> 
-					<li><a href="#">Blockbuster</a></li>
-					<li><a href="#">Contact Us</a></li>
-					<li><a href="#">Forums</a></li>
-					<li><a href="#">Blog</a></li>
-					<li><a href="#">Help Center</a></li>
-				</ul>
-			</div>
-			<div class="flex-child-ft item3">
-				<h4>Legal</h4>
-				<ul>
-					<li><a href="#">Terms of Use</a></li> 
-					<li><a href="#">Privacy Policy</a></li>	
-					<li><a href="#">Security</a></li>
-				</ul>
-			</div>
-			<div class="flex-child-ft item4">
-				<h4>Account</h4>
-				<ul>
-					<li><a href="#">My Account</a></li> 
-					<li><a href="#">Watchlist</a></li>	
-					<li><a href="#">Collections</a></li>
-					<li><a href="#">User Guide</a></li>
-				</ul>
-			</div>
-			<div class="flex-child-ft item5">
-				<h4>Newsletter</h4>
-				<p>Subscribe to our newsletter system now <br> to get latest news from us.</p>
-				<form action="#">
-					<input type="text" placeholder="Enter your email...">
-				</form>
-				<a href="#" class="btn">Subscribe now <i class="ion-ios-arrow-forward"></i></a>
-			</div>
-		</div>
-	</div>
-	<div class="ft-copyright">
-		<div class="ft-left">
-			<p>© 2017 Blockbuster. All Rights Reserved. Designed by leehari.</p>
-		</div>
-		<div class="backtotop">
-			<p><a href="#" id="back-to-top">Back to top  <i class="ion-ios-arrow-thin-up"></i></a></p>
-		</div>
-	</div>
-</footer>
-<!-- end of footer section-->
+
 
     <script src="_framework/blazor.server.js"></script>
 
-   <script src="js/jquery.js"></script>
+    <script src="js/jquery.js"></script>
     <script src="js/plugins.js"></script>
-   <script src="js/plugins2.js"></script>
+    <script src="js/plugins2.js"></script>
 
 </body>
 </html>

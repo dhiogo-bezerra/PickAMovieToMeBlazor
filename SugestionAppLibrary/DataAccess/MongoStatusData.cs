@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 
-namespace SugestionAppLibrary.DataAccess;
+namespace MozifAppLibrary.DataAccess;
 
 public class MongoStatusData : IStatusData
 {

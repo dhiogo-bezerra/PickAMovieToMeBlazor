@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using SuggestionAppUI.Shared;
+using MozifAppUI.Shared;
 using TMDbLib.Objects.Languages;
 
-namespace SuggestionAppUI.Pages;
+namespace MozifAppUI.Pages;
 
 public partial class GuessMovie
 {

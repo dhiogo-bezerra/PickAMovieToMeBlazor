@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
 
-namespace SuggestionAppUI
+namespace MozifAppUI
 {
     public static class RegisterServices
     {
