@@ -28,6 +28,7 @@ public class MovieDbModel
     public string Directors { get; set; }
     public string PosterPath { get; set; }
     public List<BasicMovieListModel> MemberOf { get; set; } = new();
+    public string OriginalTitle { get; set; } = "";
 
 
 }
